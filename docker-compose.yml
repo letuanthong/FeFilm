@@ -1,0 +1,12 @@
+version: '3.6'
+
+services:
+  product-server:
+    image: 'postgres:13.1-alpine'
+    container_name: film-server
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=letuanthong
+      - POSTGRES_PASSWORD=ltt030500
+      - POSTGRES_DB=FeFilm
