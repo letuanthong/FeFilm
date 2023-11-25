@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <meta th:replace="~{admin/fragment/head :: head}">
+  <title>Countries</title>
+</head>
+<body>
+<div th:replace="~{admin/fragment/menu :: menu}"></div>
+<div class="container">
+
+  <a th:href="@{/admin/countries/add}" style="margin: 20px 0" class="btn btn-primary">Add Country</a>
+  <table class="table">
+    <thead class="thead-light">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Country Name</th>
+      <th scope="col">Delete</th>
+      <th scope="col">Update</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="country, iStat : ${countries}">
+      <th scope="row" th:text="${iStat.index + 1}">1</th>
+      <td th:text="${country.name}">Larry</td>
+
+      <td><a href="" th:href="@{/admin/countries/delete/{id}(id=${country.id})}" class="btn btn-danger">Delete</a></td>
+      <td><a href="" th:href="@{/admin/countries/update/{id}(id=${country.id})}" class="btn btn-warning">Update</a></td>
+
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+<div th:replace="~{admin/fragment/script :: script}"></div>
+</body>
+</html>

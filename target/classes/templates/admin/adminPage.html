@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta th:replace="~{admin/fragment/head :: head}">
+    <title>Admin Page</title>
+</head>
+<body>
+<div th:replace="~{admin/fragment/menu :: menu}"></div>
+
+<div class="jumbotron text-center">
+    <h1 class="display-4">Welcome Admin</h1>
+    <p>Easily manage your data from this <mark>Admin Page</mark></p>
+</div>
+<div class="container-fluid">
+    <div class="row" style="text-align: center">
+        <div class="col-sm-3 pt-3 mx-auto" >
+            <div class="card" style="background-color:white;">
+                <div class="card-body">
+                    <h4 class="card-title">Account</h4>
+                    <a href="#" th:href="@{/admin/users}" class="card-link btn btn-primary">Manage</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 pt-3 mx-auto">
+            <div class="card" style="background-color:white;">
+                <div class="card-body">
+                    <h4 class="card-title">Genre</h4>
+                    <a href="#" th:href="@{/admin/genres}" class="card-link btn btn-primary">Manage</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 pt-3 mx-auto" >
+            <div class="card" style="background-color:white;">
+                <div class="card-body">
+                    <h4 class="card-title">Country</h4>
+                    <a href="#" th:href="@{/admin/countries}" class="card-link btn btn-primary">Manage</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 pt-3 mx-auto">
+            <div class="card" style="background-color:white;">
+                <div class="card-body">
+                    <h4 class="card-title">Film</h4>
+                    <a href="#" th:href="@{/admin/films}" class="card-link btn btn-primary">Manage</a>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div th:replace="~{admin/fragment/script :: script}"></div>
+</body>
+</html>
