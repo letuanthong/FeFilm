@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icefox Movie</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/7b3b4fa361.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/movie_section.css">
+</head>
+<body class="bg-main d-flex flex-column min-vh-100">
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg bg-theme mt-1">
+      <div class="container-lg gap-nav align-items-center mt-2">
+          <a href="index.html" class="navbar-brand text-main logo flex-lg-shrink-0 d-flex align-items-center gap-1">
+              <img src="./assets/images/Others/icefox-logo.png" alt="Logo" class="img-cover">
+          </a> 
+          <button class="navbar-toggler bg-submain" type="button" data-bs-toggle="collapse" data-bs-target="#navigation-section" aria-controls="navigation-section" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse flex-lg-grow-1 justify-content-between" id="navigation-section">
+              <ul class="navbar-nav gap-1">
+                <li class="nav-item">
+                  <a class="nav-link text-main" aria-current="page" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-main" href="#" id="movie-section" data-request-type="movies" data-request-condition="" data-request-value="" data-request-name="Movies">Movies</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-main" href="#" id="show-section" data-request-type="shows" data-request-condition="" data-request-value="" data-request-name="TV Shows">TV Shows</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link text-main dropdown-toggle" href="#" data-bs-toggle="dropdown">Genre</a>
+                  <ul class="dropdown-menu bg-main">
+                    <div class="row" id="dropdown-genre"></div>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link text-main dropdown-toggle" href="#">Country</a>
+                  <ul class="dropdown-menu bg-main">
+                    <div class="row" id="dropdown-country"></div>
+                  </ul>
+                </li>
+                <li class="nav-item d-lg-none d-block">
+                  <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                  </form>
+                </li>
+                <li class="nav-item bg-submain mt-2 rounded-3 d-lg-none d-block">
+                  <a href="#" class="nav-link text-black text-center">Your Account</a>
+                </li>
+                <li class="nav-item bg-submain mt-2 rounded-3 d-lg-none d-block">
+                  <a href="#" class="nav-link text-black text-center" data-request-name="Bookmark Movies" data-request-type="bookmarks" data-request-condition="" data-request-value="">Your Bookmark</a>
+                </li>
+              </ul>
+              <ul class="navbar-nav align-items-center gap-2 d-none d-lg-flex position-relative">
+                <li class="nav-item">
+                  <a class="nav-link text-main search-icon" aria-current="page" href="#">
+                      <i class="fa-solid fa-magnifying-glass nav-icon"></i>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-main" id="nav-bookmark-icon" href="#" data-request-name="Bookmark Movies" data-request-type="bookmarks" data-request-condition="" data-request-value="">
+                      <i class="fa-solid fa-bookmark nav-icon"></i>
+                  </a>
+                </li>
+                <li class="nav-item text-center avatar-section"></li>
+              </ul>
+          </div>
+      </div>
+    </nav>
+    <!-- Search Area -->
+    <div class="container d-none search-area">
+      <div class="d-flex align-items-center justify-content-end gap-3">
+        <input type="text" class="bg-main text-white px-2 py-1 rounded" placeholder="Search movie">
+        <a class="btn btn-outline-success" id="search-btn" data-request-type="allmovies" data-request-condition="search">Search</a>
+      </div>
+    </div>
+    <!-- End Search Area -->
+    <!-- End header -->
+    <!-- Body content -->
+    <div class="body-content" style="flex: 1;">
+      <section>
+          <div class="container">
+              <h2 class="text-submain" id="heading-section">Movies</h2>
+              <div class="d-flex align-items-center gap-3 mt-3 py-2 flex-wrap" id="filter-form">
+                <select class="form-select bg-main text-main" aria-label="Genre" id="filter-genre"></select>
+                <select class="form-select bg-main text-main" aria-label="Country" id="filter-country"></select>
+                <select class="form-select bg-main text-main" aria-label="Year" id="filter-year"></select>
+                <select class="form-select bg-main text-main" aria-label="Sort" id="sort-movie">
+                  <option selected value="">Sort</option>
+                  <option value="IMDb">IMDb</option>
+                  <option value="Year">Year</option>
+                  <option value="Name">Name</option>
+                </select>
+                <button class="btn btn-success px-3" type="submit" id="filter-btn">Filter</button>
+              </div>
+              <div class="mt-5 row" id="movie-list"></div>
+              <div class="d-flex align-items-center justify-content-center mt-4 gap-3 page-number-list"></div>
+            </div>
+          </div>
+      </section>
+    </div>
+    <!-- Footer -->
+    <section class="border-top border-white border-opacity-50">
+      <div class="container-lg">
+        <div class="py-4 my-2 text-center">
+          <span class="text-gray">Email:</span>
+          <a href="#" class="text-primary text-decoration-none px-1 lh-base">movie@icefox.com</a>
+        </div>
+      </div>
+    </section>
+  <script src="./js/main.js"></script>
+  <script src="./js/movie_section.js"></script>
+</body>
+</html>

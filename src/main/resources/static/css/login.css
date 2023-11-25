@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+body {
+    font-family: "Montserrat", sans-serif;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-image: url("../assets/images/others/Signin_Background.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+.form {
+    background-color: #fff;
+    width: 700px;
+}
+
+.wrapper {
+    padding: 45px 60px;
+}
+
+.form-control {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0;
+}
+
+.form-label {
+    padding-left: 13px;
+    color: #a9a9a9;
+    user-select: none;
+    pointer-events: none;
+    transition: 0.25s ease;
+}
+
+.form-control:not(:placeholder-shown) + .form-label,
+.form-control:focus + .form-label {
+    top: 0 !important;
+    left: 10px !important;
+    padding: 0 10px;
+    background-color: #fff;
+    color: #86b7fe;
+    font-size: 12px;
+}
+
+.user-request {
+    color: #999;
+}
+
+.submit-btn {
+    width: 100%;
+    display: block;
+    padding: 16px 0;
+    color: #fff;
+    background-image: linear-gradient(to left, #74ebd5, #9face6);
+    border: 1px solid #ebebeb;
+    font-size: 18px;
+}

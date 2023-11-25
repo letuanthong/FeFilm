@@ -19,7 +19,7 @@ public class Movie {
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
-    private String release_year;
+    private String releaseYear;
     @Column(nullable = false)
     private String overview;
     @Column(nullable = false)

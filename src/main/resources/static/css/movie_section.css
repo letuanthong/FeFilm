@@ -1,0 +1,22 @@
+@import "custom.css";
+
+.form-select {
+    width: fit-content;
+    display: inline-block;
+    background-image: url("../assets/images/Others/down-arrow.png");
+}
+
+.movie-item {
+    height: 400px;
+}
+
+.page-link-item:hover {
+    background-color: #b2bec3;
+    transition: 0.15s ease-in-out;
+}
+
+@media screen and (max-width: 767.98px) {
+    .movie-item {
+        height: 250px;
+    }
+}
