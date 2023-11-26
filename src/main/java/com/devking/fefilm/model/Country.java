@@ -15,11 +15,9 @@ import java.util.Set;
 public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "country_id")
     private Integer id;
     @Column(nullable = false)
     private String name;
-    @ManyToMany(mappedBy = "countries")
-    private Set<Movie> movies;
-    @ManyToMany(mappedBy = "countries")
-    private Set<TvSeries> tvSeries;
+
 }

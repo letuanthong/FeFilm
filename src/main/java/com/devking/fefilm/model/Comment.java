@@ -34,11 +34,4 @@ public class Comment {
             inverseJoinColumns = @JoinColumn(name = "commentId")
     )
     private Set<Movie> movies;
-    @ManyToMany
-    @JoinTable(
-            name = "series_comments",
-            joinColumns = @JoinColumn(name = "seriesId"),
-            inverseJoinColumns = @JoinColumn(name = "commentId")
-    )
-    private Set<TvSeries> tvSeries;
 }

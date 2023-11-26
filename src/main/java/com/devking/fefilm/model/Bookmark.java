@@ -17,9 +17,6 @@ public class Bookmark {
     @OneToOne
     @JoinColumn(name = "movieId")
     private Movie movie;
-    @OneToOne
-    @JoinColumn(name = "seriesId")
-    private TvSeries tvSeries;
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;

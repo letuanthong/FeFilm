@@ -26,12 +26,12 @@ public class CountryController {
     @GetMapping("/countries/add")
     public ModelAndView addCountry(Model model) {
         ModelAndView modelAndView = new ModelAndView("/admin/countriesAdd");
-        model.addAttribute("countries",new Country());
+        model.addAttribute("country",new Country());
         return modelAndView;
     }
 
     @PostMapping("/countries/add")
-    public String postCountry(@ModelAttribute("genres") Country country){
+    public String postCountry(@ModelAttribute("country") Country country){
         countryService.updateCountry(country);
         return "redirect:/admin/countries";
     }

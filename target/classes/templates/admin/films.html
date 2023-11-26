@@ -13,26 +13,32 @@
     <table class="table">
         <thead class="thead-light">
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Product Name</th>
-            <th scope="col">Category</th>
-            <th scope="col">Price</th>
-            <th scope="col">Preview</th>
+            <th scope="col">STT</th>
+            <th scope="col">Title</th>
+            <th scope="col">Genre</th>
+            <th scope="col">Country</th>
+            <th scope="col">IMDB</th>
             <th scope="col">Delete</th>
             <th scope="col">Update</th>
         </tr>
         </thead>
         <tbody>
 
-        <tr th:each="product, iStat : ${products}">
+        <tr th:each="film, iStat : ${films}">
             <th scope="row" th:text="${iStat.index + 1}">1</th>
-            <td th:text="${product.name}">Larry</td>
-            <td th:text="${product.category.name}">Larry</td>
-            <td th:text="${product.price}">Larry</td>
-            <td><img src="" height="100px" width="100px"  th:src="@{${'/productImages/' + product.imageName}}"></td>
+            <td th:text="${film.title}">Larry</td>
+            <td th:text="${film.genre.name}">Larry</td>
+            <td th:text="${film.country.name}">Larry</td>
+<!--            <td>-->
+<!--                <span th:each="genres : ${film.genre}" th:text="${genres.name}"></span>-->
+<!--            </td>-->
+<!--            <td>-->
+<!--                <span th:each="countrys : ${film.country}" th:text="${countrys.name}"></span>-->
+<!--            </td>-->
+            <td th:text="${film.imdb}">Larry</td>
 
-            <td><a href="" th:href="@{/admin/products/delete/{id}(id=${product.id})}" class="btn btn-danger">Delete</a></td>
-            <td><a href="" th:href="@{/admin/products/update/{id}(id=${product.id})}" class="btn btn-warning">Update</a></td>
+            <td><a href="" th:href="@{/admin/films/delete/{id}(id=${film.id})}" class="btn btn-danger">Delete</a></td>
+            <td><a href="" th:href="@{/admin/films/update/{id}(id=${film.id})}" class="btn btn-warning">Update</a></td>
 
         </tr>
         </tbody>

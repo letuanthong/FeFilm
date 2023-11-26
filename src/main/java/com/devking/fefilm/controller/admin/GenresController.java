@@ -27,12 +27,12 @@ public class GenresController {
     @GetMapping("/genres/add")
     public ModelAndView addGenres(Model model) {
         ModelAndView modelAndView = new ModelAndView("/admin/genresAdd");
-        model.addAttribute("genres", new Genre());
+        model.addAttribute("genre", new Genre());
         return modelAndView;
     }
 
     @PostMapping("/genres/add")
-    public String postGenAdd(@ModelAttribute("genres") Genre genre){
+    public String postGenAdd(@ModelAttribute("genre") Genre genre){
         genreService.updateGenre(genre);
         return "redirect:/admin/genres";
     }

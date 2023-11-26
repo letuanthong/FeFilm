@@ -31,20 +31,15 @@ public class Movie {
     private float imdb;
     private String director;
     private String cast;
-    @ManyToMany
-    @JoinTable(
-            name = "movie_countries",
-            joinColumns = @JoinColumn(name = "movieId"),
-            inverseJoinColumns = @JoinColumn(name = "countryId")
-    )
-    private Set<Country> countries;
-    @ManyToMany
-    @JoinTable(
-            name = "movie_genres",
-            joinColumns = @JoinColumn(name = "movieId"),
-            inverseJoinColumns = @JoinColumn(name = "genreId")
-    )
-    private Set<Genre> genres;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genre_id", referencedColumnName = "genre_id")
+    private Genre genre;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_id", referencedColumnName = "country_id")
+    private Country country;
+
     @ManyToMany(mappedBy = "movies")
     private Set<Comment> comments;
 }
