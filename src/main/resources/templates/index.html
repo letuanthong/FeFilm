@@ -88,13 +88,205 @@
   <!-- End Header -->
   <!-- Body section -->
   <div class="body-content" style="flex: 1;">
+    <!--  Start Carousel -->
     <section>
       <div class="container-lg">
-        <div id="movie-new-release" class="carousel slide" data-bs-ride="true"></div>
+        <div id="movie-new-release" class="carousel slide" data-bs-ride="true">
+          <div class="carousel-indicators">
+            <button th:each="movie, i : ${carouselMovies}" type="button" data-bs-target="#movie-new-release" th:attr="data-bs-slide-to=${i.index}, class=${i.index == 0 ? 'active' : ''}, aria-current=${i.index == 0 ? 'true' : ''}, aria-label=${'Slide ' + i.index}" ></button>
+          </div>
+          <div class="carousel-inner">
+            <div th:each="movie, i: ${carouselMovies}" data-bs-interval="10000" th:attrappend="class=${i.index == 0 ? 'carousel-item active carousel-overlay rounded' : 'carousel-item carousel-overlay rounded'}">
+              <img th:src="${movie.getImageHorizontalPath()}" class="d-block w-100 object-fit-cover" alt="">
+              <div class="carousel-caption d-lg-block position-absolute start-0 translate-middle-y text-start px-5">
+                <h2 class="fw-bold display-5 mb-3" th:text="${movie.getTitle()}"></h2>
+                <p class="mb-3 truncate-text lh-base" th:text="${movie.getOverview()}"></p>
+                <button class="btn px-4 py-3 btn-danger rounded-pill fw-bold watch-now-btn">Watch Now</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
-    <div id="movie-wrapper"></div>
+<!-- End Carousel -->
+<!-- Start Movie List -->
+    <div id="movie-wrapper">
+    <!-- Start Popular Movie -->
+      <section>
+        <div class="container-lg">
+          <div class="d-flex align-items-center justify-content-between">
+            <h2 class="text-submain">Popular Movies</h2>
+            <a class="text-secondary fw-bold cursor-pointer text-decoration-none" href="#" data-request-name="${title}" data-request-type="${type}" data-request-condition="${condition}" data-request-value="${value}">
+              View More
+              <i class="fa-solid fa-angle-right"></i>
+            </a>
+          </div>
+
+          <div class="movie-list mt-4 pt-2">
+            <div th:each="movie, i: ${popularMovies}" th:attr="class='movie-item position-relative item' + ${i.index + 1}">
+              <a href="#" class="movie-link overflow-hidden position-relative d-block text-white h-100">
+                <div class="position-absolute top-0 start-0 px-3 py-2 d-flex align-items-center justify-content-between w-100">
+                  <div class="d-flex align-items-center justify-content-center gap-2 overlay-rounded-pill px-3 py-1 rounded-pill">
+                    <i class="fa-solid fa-star star-icon"></i>
+                    <span class="fw-bold" th:text="${movie.getImdb()}"></span>
+                  </div>
+                </div>
+                <img th:src="${i.index == popularMovies.getSize() - 1 ? movie.getImageVerticalPath() : movie.getImageHorizontalPath()}" alt="Movie" class="img-cover rounded">
+                <div class="overlay position-absolute bottom-0 start-50 translate-middle-x d-flex align-items-center justify-content-between w-100 px-3 py-lg-3 py-2">
+                  <h5 class="fw-bold m-0 movie-title large text-capitalize" th:text="${movie.getTitle()}"></h5>
+                  <span class="h5 fw-bold m-0 movie-year large" th:text="${movie.getReleaseYear()}"></span>
+                </div>
+              </a>
+              <div class="position-absolute top-50 start-50 translate-middle play-btn text-white pe-none rounded-circle">
+                <i class="fa-solid fa-play"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End Popular Movie -->
+      <!-- Start Chinese Movie -->
+      <section>
+        <div class="container-lg">
+          <div class="d-flex align-items-center justify-content-between">
+            <h2 class="text-submain">Chinese Movies</h2>
+            <a class="text-secondary fw-bold cursor-pointer text-decoration-none" href="#" data-request-name="${title}" data-request-type="${type}" data-request-condition="${condition}" data-request-value="${value}">
+              View More
+              <i class="fa-solid fa-angle-right"></i>
+            </a>
+          </div>
+
+          <div class="movie-list mt-4 pt-2">
+            <div th:each="movie, i: ${chineseMovies}" th:attr="class='movie-item position-relative item' + ${i.index + 1}">
+              <a href="#" class="movie-link overflow-hidden position-relative d-block text-white h-100">
+                <div class="position-absolute top-0 start-0 px-3 py-2 d-flex align-items-center justify-content-between w-100">
+                  <div class="d-flex align-items-center justify-content-center gap-2 overlay-rounded-pill px-3 py-1 rounded-pill">
+                    <i class="fa-solid fa-star star-icon"></i>
+                    <span class="fw-bold" th:text="${movie.getImdb()}"></span>
+                  </div>
+                </div>
+                <img th:src="${i.index == popularMovies.getSize() - 1 ? movie.getImageVerticalPath() : movie.getImageHorizontalPath()}" alt="Movie" class="img-cover rounded">
+                <div class="overlay position-absolute bottom-0 start-50 translate-middle-x d-flex align-items-center justify-content-between w-100 px-3 py-lg-3 py-2">
+                  <h5 class="fw-bold m-0 movie-title large text-capitalize" th:text="${movie.getTitle()}"></h5>
+                  <span class="h5 fw-bold m-0 movie-year large" th:text="${movie.getReleaseYear()}"></span>
+                </div>
+              </a>
+              <div class="position-absolute top-50 start-50 translate-middle play-btn text-white pe-none rounded-circle">
+                <i class="fa-solid fa-play"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End Chinese Movie -->
+
+      <!-- Start South Korea Movie -->
+      <section>
+        <div class="container-lg">
+          <div class="d-flex align-items-center justify-content-between">
+            <h2 class="text-submain">South Korea Movies</h2>
+            <a class="text-secondary fw-bold cursor-pointer text-decoration-none" href="#" data-request-name="${title}" data-request-type="${type}" data-request-condition="${condition}" data-request-value="${value}">
+              View More
+              <i class="fa-solid fa-angle-right"></i>
+            </a>
+          </div>
+
+          <div class="movie-list mt-4 pt-2">
+            <div th:each="movie, i: ${koreaMovies}" th:attr="class='movie-item position-relative item' + ${i.index + 1}">
+              <a href="#" class="movie-link overflow-hidden position-relative d-block text-white h-100">
+                <div class="position-absolute top-0 start-0 px-3 py-2 d-flex align-items-center justify-content-between w-100">
+                  <div class="d-flex align-items-center justify-content-center gap-2 overlay-rounded-pill px-3 py-1 rounded-pill">
+                    <i class="fa-solid fa-star star-icon"></i>
+                    <span class="fw-bold" th:text="${movie.getImdb()}"></span>
+                  </div>
+                </div>
+                <img th:src="${i.index == popularMovies.getSize() - 1 ? movie.getImageVerticalPath() : movie.getImageHorizontalPath()}" alt="Movie" class="img-cover rounded">
+                <div class="overlay position-absolute bottom-0 start-50 translate-middle-x d-flex align-items-center justify-content-between w-100 px-3 py-lg-3 py-2">
+                  <h5 class="fw-bold m-0 movie-title large text-capitalize" th:text="${movie.getTitle()}"></h5>
+                  <span class="h5 fw-bold m-0 movie-year large" th:text="${movie.getReleaseYear()}"></span>
+                </div>
+              </a>
+              <div class="position-absolute top-50 start-50 translate-middle play-btn text-white pe-none rounded-circle">
+                <i class="fa-solid fa-play"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End South Korea Movie -->
+
+      <!-- Start Japanese Movie -->
+      <section>
+        <div class="container-lg">
+          <div class="d-flex align-items-center justify-content-between">
+            <h2 class="text-submain">Japanese Movies</h2>
+            <a class="text-secondary fw-bold cursor-pointer text-decoration-none" href="#" data-request-name="${title}" data-request-type="${type}" data-request-condition="${condition}" data-request-value="${value}">
+              View More
+              <i class="fa-solid fa-angle-right"></i>
+            </a>
+          </div>
+
+          <div class="movie-list mt-4 pt-2">
+            <div th:each="movie, i: ${japanMovies}" th:attr="class='movie-item position-relative item' + ${i.index + 1}">
+              <a href="#" class="movie-link overflow-hidden position-relative d-block text-white h-100">
+                <div class="position-absolute top-0 start-0 px-3 py-2 d-flex align-items-center justify-content-between w-100">
+                  <div class="d-flex align-items-center justify-content-center gap-2 overlay-rounded-pill px-3 py-1 rounded-pill">
+                    <i class="fa-solid fa-star star-icon"></i>
+                    <span class="fw-bold" th:text="${movie.getImdb()}"></span>
+                  </div>
+                </div>
+                <img th:src="${i.index == popularMovies.getSize() - 1 ? movie.getImageVerticalPath() : movie.getImageHorizontalPath()}" alt="Movie" class="img-cover rounded">
+                <div class="overlay position-absolute bottom-0 start-50 translate-middle-x d-flex align-items-center justify-content-between w-100 px-3 py-lg-3 py-2">
+                  <h5 class="fw-bold m-0 movie-title large text-capitalize" th:text="${movie.getTitle()}"></h5>
+                  <span class="h5 fw-bold m-0 movie-year large" th:text="${movie.getReleaseYear()}"></span>
+                </div>
+              </a>
+              <div class="position-absolute top-50 start-50 translate-middle play-btn text-white pe-none rounded-circle">
+                <i class="fa-solid fa-play"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End Japanese Movie -->
+
+      <!-- Start HongKong Movie -->
+      <section>
+        <div class="container-lg">
+          <div class="d-flex align-items-center justify-content-between">
+            <h2 class="text-submain">HongKong Movies</h2>
+            <a class="text-secondary fw-bold cursor-pointer text-decoration-none" href="#" data-request-name="${title}" data-request-type="${type}" data-request-condition="${condition}" data-request-value="${value}">
+              View More
+              <i class="fa-solid fa-angle-right"></i>
+            </a>
+          </div>
+
+          <div class="movie-list mt-4 pt-2">
+            <div th:each="movie, i: ${hongKongMovies}" th:attr="class='movie-item position-relative item' + ${i.index + 1}">
+              <a href="#" class="movie-link overflow-hidden position-relative d-block text-white h-100">
+                <div class="position-absolute top-0 start-0 px-3 py-2 d-flex align-items-center justify-content-between w-100">
+                  <div class="d-flex align-items-center justify-content-center gap-2 overlay-rounded-pill px-3 py-1 rounded-pill">
+                    <i class="fa-solid fa-star star-icon"></i>
+                    <span class="fw-bold" th:text="${movie.getImdb()}"></span>
+                  </div>
+                </div>
+                <img th:src="${i.index == popularMovies.getSize() - 1 ? movie.getImageVerticalPath() : movie.getImageHorizontalPath()}" alt="Movie" class="img-cover rounded">
+                <div class="overlay position-absolute bottom-0 start-50 translate-middle-x d-flex align-items-center justify-content-between w-100 px-3 py-lg-3 py-2">
+                  <h5 class="fw-bold m-0 movie-title large text-capitalize" th:text="${movie.getTitle()}"></h5>
+                  <span class="h5 fw-bold m-0 movie-year large" th:text="${movie.getReleaseYear()}"></span>
+                </div>
+              </a>
+              <div class="position-absolute top-50 start-50 translate-middle play-btn text-white pe-none rounded-circle">
+                <i class="fa-solid fa-play"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End HongKong Movie -->
+    </div>
   </div>
+<!-- End Movie List-->
   <!-- Footer -->
   <section class="border-top border-white border-opacity-50">
     <div class="container-lg">
@@ -104,8 +296,6 @@
       </div>
     </div>
   </section>
-  <script src="./js/main.js"></script>
-  <script src="./js/index.js"></script>
 </body>
 
 </html>

@@ -20,7 +20,8 @@ public class Movie {
     private String title;
     @Column(nullable = false)
     private String releaseYear;
-    @Column(nullable = false)
+    @Lob
+    @Column(nullable = false, length = 512)
     private String overview;
     @Column(nullable = false)
     private String imageVerticalPath;

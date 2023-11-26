@@ -1,7 +1,9 @@
 version: '3.8'
 services:
   fefilm:
+    container_name: fefilm
     image: mysql:8.0
+    command: mysqld --sql_mode=""
     cap_add:
       - SYS_NICE
     restart: always
