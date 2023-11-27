@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
 :root {
     --main: #0d0d0f;
     --submain: #eeead6;
@@ -64,6 +64,10 @@ section {
 
 .bg-green {
     background-color: var(--green);
+}
+
+.border-submain {
+    border-color: var(--ochre) !important;
 }
 
 .truncate-text {

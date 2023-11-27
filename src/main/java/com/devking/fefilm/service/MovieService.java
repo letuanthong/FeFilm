@@ -1,5 +1,7 @@
 package com.devking.fefilm.service;
 
+import com.devking.fefilm.model.Country;
+import com.devking.fefilm.model.Genre;
 import com.devking.fefilm.model.Movie;
 import com.devking.fefilm.model.request.MovieRequest;
 import org.springframework.data.domain.Page;
@@ -18,4 +20,7 @@ public interface MovieService {
 
     List<Movie> getAllMovie();
     Page<Movie> getAllMoviesWithPagination(MovieRequest movieRequest);
+    Page<Movie> getRecommendedMovies(List<String> genreList, MovieRequest movieRequest);
+    List<Genre> getGenresByMovieTitle(String title);
+    List<Country> getCountriesByMovieTitle(String title);
 }

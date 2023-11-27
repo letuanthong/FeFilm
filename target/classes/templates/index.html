@@ -14,94 +14,24 @@
 
 <body class="bg-main d-flex flex-column min-vh-100">
   <!-- Header -->
-  <nav class="navbar navbar-expand-lg bg-theme mt-1">
-    <div class="container-lg gap-nav align-items-center mt-2">
-      <a th:href="@{/index}" class="navbar-brand text-main logo flex-lg-shrink-0 d-flex align-items-center gap-1">
-        <img th:src="@{images/testtest.png}" alt="Logo" class="img-cover">
-      </a>
-      <button class="navbar-toggler bg-submain" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navigation-section" aria-controls="navigation-section" aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse flex-lg-grow-1 justify-content-between" id="navigation-section">
-        <ul class="navbar-nav gap-1">
-          <li class="nav-item">
-            <a class="nav-link text-main" aria-current="page" href="index.html">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-main" href="#" id="movie-section" data-request-name="Movies" data-request-type="movies"
-              data-request-condition="" data-request-value="">Movies</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-main" href="#" id="show-section" data-request-name="TV Shows" data-request-type="shows" data-request-condition="" data-request-value="">TV Shows</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link text-main dropdown-toggle" href="#" data-bs-toggle="dropdown">Genre</a>
-            <ul class="dropdown-menu bg-main">
-              <div class="row" id="dropdown-genre"></div>
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link text-main dropdown-toggle" href="#">Country</a>
-            <ul class="dropdown-menu bg-main">
-              <div class="row" id="dropdown-country"></div>
-            </ul>
-          </li>
-          <li class="nav-item d-lg-none d-block">
-            <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </li>
-          <li class="nav-item bg-submain mt-2 rounded-3 d-lg-none d-block">
-            <a href="#" class="nav-link text-black text-center">Your Account</a>
-          </li>
-          <li class="nav-item bg-submain mt-2 rounded-3 d-lg-none d-block">
-            <a href="#" class="nav-link text-black text-center" data-request-name="Bookmark Movies" data-request-type="bookmarks" data-request-condition="" data-request-value="">Your Bookmark</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav align-items-center gap-2 d-none d-lg-flex position-relative">
-          <li class="nav-item">
-            <a class="nav-link text-main search-icon" aria-current="page" href="#">
-              <i class="fa-solid fa-magnifying-glass nav-icon"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-main" id="nav-bookmark-icon" href="#" data-request-name="Bookmark Movies" data-request-type="bookmarks" data-request-condition="" data-request-value="">
-              <i class="fa-solid fa-bookmark nav-icon"></i>
-            </a>
-          </li>
-          <li class="nav-item text-center avatar-section"></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <!-- Search Area -->
-  <div class="container d-none search-area">
-    <div class="d-flex align-items-center justify-content-end gap-3">
-      <input type="text" class="bg-main text-white px-2 py-1 rounded" placeholder="Search movie">
-      <a class="btn btn-outline-success" id="search-btn" data-request-type="allmovies" data-request-condition="search">Search</a>
-    </div>
-  </div>
-  <!-- End Search Area -->
+  <nav th:replace="fragments/header :: header"></nav>
   <!-- End Header -->
   <!-- Body section -->
   <div class="body-content" style="flex: 1;">
     <!--  Start Carousel -->
     <section>
-      <div class="container-lg">
+      <div class="container">
         <div id="movie-new-release" class="carousel slide" data-bs-ride="true">
           <div class="carousel-indicators">
             <button th:each="movie, i : ${carouselMovies}" type="button" data-bs-target="#movie-new-release" th:attr="data-bs-slide-to=${i.index}, class=${i.index == 0 ? 'active' : ''}, aria-current=${i.index == 0 ? 'true' : ''}, aria-label=${'Slide ' + i.index}" ></button>
           </div>
           <div class="carousel-inner">
             <div th:each="movie, i: ${carouselMovies}" data-bs-interval="10000" th:attrappend="class=${i.index == 0 ? 'carousel-item active carousel-overlay rounded' : 'carousel-item carousel-overlay rounded'}">
-              <img th:src="${movie.getImageHorizontalPath()}" class="d-block w-100 object-fit-cover" alt="">
+              <img th:src="${movie.getImageHorizontalPath()}" class="d-block img-cover" alt="">
               <div class="carousel-caption d-lg-block position-absolute start-0 translate-middle-y text-start px-5">
                 <h2 class="fw-bold display-5 mb-3" th:text="${movie.getTitle()}"></h2>
                 <p class="mb-3 truncate-text lh-base" th:text="${movie.getOverview()}"></p>
-                <button class="btn px-4 py-3 btn-danger rounded-pill fw-bold watch-now-btn">Watch Now</button>
+                <a th:href="'/movies/detail/' + ${movie.getId()}" class="btn px-4 py-3 btn-danger rounded-pill fw-bold watch-now-btn">Watch Now</a>
               </div>
             </div>
           </div>
@@ -112,190 +42,25 @@
 <!-- Start Movie List -->
     <div id="movie-wrapper">
     <!-- Start Popular Movie -->
-      <section>
-        <div class="container-lg">
-          <div class="d-flex align-items-center justify-content-between">
-            <h2 class="text-submain">Popular Movies</h2>
-            <a class="text-secondary fw-bold cursor-pointer text-decoration-none" href="#" data-request-name="${title}" data-request-type="${type}" data-request-condition="${condition}" data-request-value="${value}">
-              View More
-              <i class="fa-solid fa-angle-right"></i>
-            </a>
-          </div>
-
-          <div class="movie-list mt-4 pt-2">
-            <div th:each="movie, i: ${popularMovies}" th:attr="class='movie-item position-relative item' + ${i.index + 1}">
-              <a href="#" class="movie-link overflow-hidden position-relative d-block text-white h-100">
-                <div class="position-absolute top-0 start-0 px-3 py-2 d-flex align-items-center justify-content-between w-100">
-                  <div class="d-flex align-items-center justify-content-center gap-2 overlay-rounded-pill px-3 py-1 rounded-pill">
-                    <i class="fa-solid fa-star star-icon"></i>
-                    <span class="fw-bold" th:text="${movie.getImdb()}"></span>
-                  </div>
-                </div>
-                <img th:src="${i.index == popularMovies.getSize() - 1 ? movie.getImageVerticalPath() : movie.getImageHorizontalPath()}" alt="Movie" class="img-cover rounded">
-                <div class="overlay position-absolute bottom-0 start-50 translate-middle-x d-flex align-items-center justify-content-between w-100 px-3 py-lg-3 py-2">
-                  <h5 class="fw-bold m-0 movie-title large text-capitalize" th:text="${movie.getTitle()}"></h5>
-                  <span class="h5 fw-bold m-0 movie-year large" th:text="${movie.getReleaseYear()}"></span>
-                </div>
-              </a>
-              <div class="position-absolute top-50 start-50 translate-middle play-btn text-white pe-none rounded-circle">
-                <i class="fa-solid fa-play"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section th:replace="fragments/movie-home-grid :: gridHomeMovie (title='Popular Movies', data=${popularMovies}, url=${'/movies?page=1&size=8&orderByColumn=imdb'})"></section>
       <!-- End Popular Movie -->
       <!-- Start Chinese Movie -->
-      <section>
-        <div class="container-lg">
-          <div class="d-flex align-items-center justify-content-between">
-            <h2 class="text-submain">Chinese Movies</h2>
-            <a class="text-secondary fw-bold cursor-pointer text-decoration-none" href="#" data-request-name="${title}" data-request-type="${type}" data-request-condition="${condition}" data-request-value="${value}">
-              View More
-              <i class="fa-solid fa-angle-right"></i>
-            </a>
-          </div>
-
-          <div class="movie-list mt-4 pt-2">
-            <div th:each="movie, i: ${chineseMovies}" th:attr="class='movie-item position-relative item' + ${i.index + 1}">
-              <a href="#" class="movie-link overflow-hidden position-relative d-block text-white h-100">
-                <div class="position-absolute top-0 start-0 px-3 py-2 d-flex align-items-center justify-content-between w-100">
-                  <div class="d-flex align-items-center justify-content-center gap-2 overlay-rounded-pill px-3 py-1 rounded-pill">
-                    <i class="fa-solid fa-star star-icon"></i>
-                    <span class="fw-bold" th:text="${movie.getImdb()}"></span>
-                  </div>
-                </div>
-                <img th:src="${i.index == popularMovies.getSize() - 1 ? movie.getImageVerticalPath() : movie.getImageHorizontalPath()}" alt="Movie" class="img-cover rounded">
-                <div class="overlay position-absolute bottom-0 start-50 translate-middle-x d-flex align-items-center justify-content-between w-100 px-3 py-lg-3 py-2">
-                  <h5 class="fw-bold m-0 movie-title large text-capitalize" th:text="${movie.getTitle()}"></h5>
-                  <span class="h5 fw-bold m-0 movie-year large" th:text="${movie.getReleaseYear()}"></span>
-                </div>
-              </a>
-              <div class="position-absolute top-50 start-50 translate-middle play-btn text-white pe-none rounded-circle">
-                <i class="fa-solid fa-play"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section th:replace="fragments/movie-home-grid :: gridHomeMovie (title='China Movies', data=${chineseMovies}, url=${'/movies/countries/china?page=1&size=8&orderByColumn=imdb'})"></section>
       <!-- End Chinese Movie -->
-
       <!-- Start South Korea Movie -->
-      <section>
-        <div class="container-lg">
-          <div class="d-flex align-items-center justify-content-between">
-            <h2 class="text-submain">South Korea Movies</h2>
-            <a class="text-secondary fw-bold cursor-pointer text-decoration-none" href="#" data-request-name="${title}" data-request-type="${type}" data-request-condition="${condition}" data-request-value="${value}">
-              View More
-              <i class="fa-solid fa-angle-right"></i>
-            </a>
-          </div>
-
-          <div class="movie-list mt-4 pt-2">
-            <div th:each="movie, i: ${koreaMovies}" th:attr="class='movie-item position-relative item' + ${i.index + 1}">
-              <a href="#" class="movie-link overflow-hidden position-relative d-block text-white h-100">
-                <div class="position-absolute top-0 start-0 px-3 py-2 d-flex align-items-center justify-content-between w-100">
-                  <div class="d-flex align-items-center justify-content-center gap-2 overlay-rounded-pill px-3 py-1 rounded-pill">
-                    <i class="fa-solid fa-star star-icon"></i>
-                    <span class="fw-bold" th:text="${movie.getImdb()}"></span>
-                  </div>
-                </div>
-                <img th:src="${i.index == popularMovies.getSize() - 1 ? movie.getImageVerticalPath() : movie.getImageHorizontalPath()}" alt="Movie" class="img-cover rounded">
-                <div class="overlay position-absolute bottom-0 start-50 translate-middle-x d-flex align-items-center justify-content-between w-100 px-3 py-lg-3 py-2">
-                  <h5 class="fw-bold m-0 movie-title large text-capitalize" th:text="${movie.getTitle()}"></h5>
-                  <span class="h5 fw-bold m-0 movie-year large" th:text="${movie.getReleaseYear()}"></span>
-                </div>
-              </a>
-              <div class="position-absolute top-50 start-50 translate-middle play-btn text-white pe-none rounded-circle">
-                <i class="fa-solid fa-play"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section th:replace="fragments/movie-home-grid :: gridHomeMovie (title='South Korea Movies', data=${koreaMovies}, url=${'/movies/countries/south korea?page=1&size=8&orderByColumn=imdb'})"></section>
       <!-- End South Korea Movie -->
-
       <!-- Start Japanese Movie -->
-      <section>
-        <div class="container-lg">
-          <div class="d-flex align-items-center justify-content-between">
-            <h2 class="text-submain">Japanese Movies</h2>
-            <a class="text-secondary fw-bold cursor-pointer text-decoration-none" href="#" data-request-name="${title}" data-request-type="${type}" data-request-condition="${condition}" data-request-value="${value}">
-              View More
-              <i class="fa-solid fa-angle-right"></i>
-            </a>
-          </div>
-
-          <div class="movie-list mt-4 pt-2">
-            <div th:each="movie, i: ${japanMovies}" th:attr="class='movie-item position-relative item' + ${i.index + 1}">
-              <a href="#" class="movie-link overflow-hidden position-relative d-block text-white h-100">
-                <div class="position-absolute top-0 start-0 px-3 py-2 d-flex align-items-center justify-content-between w-100">
-                  <div class="d-flex align-items-center justify-content-center gap-2 overlay-rounded-pill px-3 py-1 rounded-pill">
-                    <i class="fa-solid fa-star star-icon"></i>
-                    <span class="fw-bold" th:text="${movie.getImdb()}"></span>
-                  </div>
-                </div>
-                <img th:src="${i.index == popularMovies.getSize() - 1 ? movie.getImageVerticalPath() : movie.getImageHorizontalPath()}" alt="Movie" class="img-cover rounded">
-                <div class="overlay position-absolute bottom-0 start-50 translate-middle-x d-flex align-items-center justify-content-between w-100 px-3 py-lg-3 py-2">
-                  <h5 class="fw-bold m-0 movie-title large text-capitalize" th:text="${movie.getTitle()}"></h5>
-                  <span class="h5 fw-bold m-0 movie-year large" th:text="${movie.getReleaseYear()}"></span>
-                </div>
-              </a>
-              <div class="position-absolute top-50 start-50 translate-middle play-btn text-white pe-none rounded-circle">
-                <i class="fa-solid fa-play"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section th:replace="fragments/movie-home-grid :: gridHomeMovie (title='Japan Movies', data=${japanMovies}, url=${'/movies/countries/japan?page=1&size=8&orderByColumn=imdb'})"></section>
       <!-- End Japanese Movie -->
-
       <!-- Start HongKong Movie -->
-      <section>
-        <div class="container-lg">
-          <div class="d-flex align-items-center justify-content-between">
-            <h2 class="text-submain">HongKong Movies</h2>
-            <a class="text-secondary fw-bold cursor-pointer text-decoration-none" href="#" data-request-name="${title}" data-request-type="${type}" data-request-condition="${condition}" data-request-value="${value}">
-              View More
-              <i class="fa-solid fa-angle-right"></i>
-            </a>
-          </div>
-
-          <div class="movie-list mt-4 pt-2">
-            <div th:each="movie, i: ${hongKongMovies}" th:attr="class='movie-item position-relative item' + ${i.index + 1}">
-              <a href="#" class="movie-link overflow-hidden position-relative d-block text-white h-100">
-                <div class="position-absolute top-0 start-0 px-3 py-2 d-flex align-items-center justify-content-between w-100">
-                  <div class="d-flex align-items-center justify-content-center gap-2 overlay-rounded-pill px-3 py-1 rounded-pill">
-                    <i class="fa-solid fa-star star-icon"></i>
-                    <span class="fw-bold" th:text="${movie.getImdb()}"></span>
-                  </div>
-                </div>
-                <img th:src="${i.index == popularMovies.getSize() - 1 ? movie.getImageVerticalPath() : movie.getImageHorizontalPath()}" alt="Movie" class="img-cover rounded">
-                <div class="overlay position-absolute bottom-0 start-50 translate-middle-x d-flex align-items-center justify-content-between w-100 px-3 py-lg-3 py-2">
-                  <h5 class="fw-bold m-0 movie-title large text-capitalize" th:text="${movie.getTitle()}"></h5>
-                  <span class="h5 fw-bold m-0 movie-year large" th:text="${movie.getReleaseYear()}"></span>
-                </div>
-              </a>
-              <div class="position-absolute top-50 start-50 translate-middle play-btn text-white pe-none rounded-circle">
-                <i class="fa-solid fa-play"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section th:replace="fragments/movie-home-grid :: gridHomeMovie (title='HongKong Movies', data=${hongKongMovies}, url=${'/movies/countries/hongkong?page=1&size=8&orderByColumn=imdb'})"></section>
       <!-- End HongKong Movie -->
     </div>
   </div>
 <!-- End Movie List-->
   <!-- Footer -->
-  <section class="border-top border-white border-opacity-50">
-    <div class="container-lg">
-      <div class="py-4 my-2 text-center">
-        <span class="text-gray">Email:</span>
-        <a href="#" class="text-primary text-decoration-none px-1 lh-base">movie@fefilm.com</a>
-      </div>
-    </div>
-  </section>
+  <section th:replace="fragments/footer :: footer"></section>
 </body>
 
 </html>

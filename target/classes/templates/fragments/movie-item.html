@@ -1,0 +1,17 @@
+<div th:fragment="movieItem (data)" th:each="movie, i : ${data}" class="col-6 col-sm-4 col-lg-3 position-relative mb-4 px-2 movie-item">
+    <a th:href="'/movies/detail/' + ${movie.getId()}" class="movie-link overflow-hidden position-relative d-block text-white h-100">
+        <div class="position-absolute top-0 start-0 px-3 py-2 d-flex align-items-center justify-content-between w-100">
+            <div class="d-flex align-items-center justify-content-center gap-2 overlay-rounded-pill px-3 py-1 rounded-pill">
+                <i class="fa-solid fa-star star-icon"></i>
+                <span class="fw-bold" th:text="${movie.getImdb()}"></span>
+            </div>
+        </div>
+        <img th:src="${movie.getImageVerticalPath()}" alt="Movie" class="img-cover rounded">
+        <div class="overlay position-absolute bottom-0 start-50 translate-middle-x d-flex align-items-center justify-content-between w-100 px-3 py-2">
+            <h5 class="fw-bold m-0 movie-title" th:text="${movie.getTitle()}"></h5>
+            <span class="h5 fw-bold m-0 movie-year" th:text="${movie.getReleaseYear()}"></span>
+        </div></a>
+    <div class="position-absolute top-50 start-50 translate-middle play-btn text-white pe-none rounded-circle">
+        <i class="fa-solid fa-play"></i>
+    </div>
+</div>

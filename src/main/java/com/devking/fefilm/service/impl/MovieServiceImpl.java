@@ -1,5 +1,7 @@
 package com.devking.fefilm.service.impl;
 
+import com.devking.fefilm.model.Country;
+import com.devking.fefilm.model.Genre;
 import com.devking.fefilm.model.Movie;
 import com.devking.fefilm.model.request.MovieRequest;
 import com.devking.fefilm.repository.MovieRepository;
@@ -53,6 +55,20 @@ public class MovieServiceImpl implements MovieService {
                 break;
         }
         return movies;
-//        return movieRepository.findAllDistinct(pageRequest);
+    }
+
+    @Override
+    public Page<Movie> getRecommendedMovies(List<String> genreList, MovieRequest movieRequest) {
+        Pageable pageRequest = PageRequest.of(movieRequest.getPage(), movieRequest.getItemsPerPage(), Sort.by(movieRequest.getDirection().equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, movieRequest.getOrderByColumn()));
+        return movieRepository.findRecommendedMovies(movieRequest.getValue(), genreList, pageRequest);
+    }
+
+    @Override
+    public List<Genre> getGenresByMovieTitle(String title) {
+        return movieRepository.findAllGenresByMovieTitle(title);
+    }
+    @Override
+    public List<Country> getCountriesByMovieTitle(String title) {
+        return movieRepository.findAllCountriesByMovieTitle(title);
     }
 }
