@@ -1,7 +1,7 @@
 <section th:fragment="gridHomeMovie (title, data, url)">
     <div class="container-lg">
         <div class="d-flex align-items-center justify-content-between">
-            <h2 class="text-submain" th:text="${title}"></h2>
+            <h2 class="text-submain border-4 border-start ps-3 border-submain bold" th:text="${title}"></h2>
             <a class="text-secondary fw-bold cursor-pointer text-decoration-none" th:href="${url}" data-request-name="${title}" data-request-type="${type}" data-request-condition="${condition}" data-request-value="${value}">
                 View More
                 <i class="fa-solid fa-angle-right"></i>

@@ -12,7 +12,7 @@
 </head>
 <body class="bg-main d-flex flex-column min-vh-100">
 <!-- Header -->
-<nav th:replace="fragments/header :: header"></nav>
+<nav th:replace="fragments/header :: header(genreList=${genreList}, countryList=${countryList})"></nav>
 <!-- End header -->
 <!-- Body content -->
 <div class="body-content" style="flex: 1;">
@@ -46,7 +46,7 @@
                     <p class="text-white-50 truncate-text mt-2 mb-3" th:text="${movie.getOverview()}"></p>
                     <div class="mt-2 d-flex align-items-center gap-2 limit-half-length">
                         <span>Genre: </span>
-                        <span th:each="genre, i : ${genreList}" class="text-white-50" th:text="${(i.index == genreList.size() - 1) ? genre.getName() : genre.getName() + ', '}"></span>
+                        <span th:each="genre, i : ${movieGenreList}" class="text-white-50" th:text="${(i.index == genreList.size() - 1) ? genre.getName() : genre.getName() + ', '}"></span>
                     </div>
                     <div class="mt-2 d-flex align-items-center gap-2 limit-half-length">
                         <span>Director: </span>
@@ -62,7 +62,7 @@
                     </div>
                     <div class="mt-2 d-flex align-items-center gap-2 limit-half-length">
                         <span>Country: </span>
-                        <span th:each="country, i : ${countryList}" class="text-white-50" th:text="${(i.index == countryList.size() - 1) ? country.getName() : country.getName() + ', '}"></span>
+                        <span th:each="country, i : ${movieCountryList}" class="text-white-50" th:text="${(i.index == countryList.size() - 1) ? country.getName() : country.getName() + ', '}"></span>
                     </div>
                 </div>
             </div>

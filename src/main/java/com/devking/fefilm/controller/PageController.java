@@ -4,6 +4,8 @@ import com.devking.fefilm.model.Country;
 import com.devking.fefilm.model.Genre;
 import com.devking.fefilm.model.Movie;
 import com.devking.fefilm.model.request.MovieRequest;
+import com.devking.fefilm.service.CountryService;
+import com.devking.fefilm.service.GenreService;
 import com.devking.fefilm.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,10 @@ import java.util.stream.IntStream;
 public class PageController {
     @Autowired
     private MovieService movieService;
+    @Autowired
+    private GenreService genreService;
+    @Autowired
+    private CountryService countryService;
     @GetMapping("")
     public ModelAndView index(Model model) {
         MovieRequest carouselMovieRequest = new MovieRequest("", "", "desc", 0, 3, "releaseYear");
@@ -36,6 +42,8 @@ public class PageController {
         Page<Movie> koreaMovies = movieService.getAllMoviesWithPagination(koreaMovieRequest);
         Page<Movie> japanMovies = movieService.getAllMoviesWithPagination(japanMovieRequest);
         Page<Movie> hongKongMovies = movieService.getAllMoviesWithPagination(hongkongMovieRequest);
+        List<Genre> genreList = genreService.getAllGenre();
+        List<Country> countryList = countryService.getAllCountry();
 
         model.addAttribute("carouselMovies", carouselMovies);
         model.addAttribute("popularMovies", popularMovies);
@@ -43,6 +51,8 @@ public class PageController {
         model.addAttribute("koreaMovies", koreaMovies);
         model.addAttribute("japanMovies", japanMovies);
         model.addAttribute("hongKongMovies", hongKongMovies);
+        model.addAttribute("genreList", genreList);
+        model.addAttribute("countryList", countryList);
         ModelAndView modelAndView = new ModelAndView("index");
         return modelAndView;
     }
@@ -52,11 +62,15 @@ public class PageController {
         MovieRequest allMoviesRequest = new MovieRequest("", "", "desc", page - 1, size, orderByColumn);
         Page<Movie> allMovies = movieService.getAllMoviesWithPagination(allMoviesRequest);
         int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages()).toArray();
+        List<Genre> genreList = genreService.getAllGenre();
+        List<Genre> countryList = genreService.getAllGenre();
 
         model.addAttribute("title", "Popular Movies");
         model.addAttribute("allMovies", allMovies);
         model.addAttribute("pageNumberList", pageNumberList);
         model.addAttribute("activePage", page);
+        model.addAttribute("genreList", genreList);
+        model.addAttribute("countryList", countryList);
 
         ModelAndView modelAndView = new ModelAndView("movies");
         return modelAndView;
@@ -67,11 +81,33 @@ public class PageController {
         MovieRequest movieByCountryRequest = new MovieRequest("country", country, "desc", page - 1, size, "releaseYear");
         Page<Movie> allMovies = movieService.getAllMoviesWithPagination(movieByCountryRequest);
         int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages()).toArray();
+        List<Genre> genreList = genreService.getAllGenre();
+        List<Genre> countryList = genreService.getAllGenre();
 
         model.addAttribute("title", country + " Movies");
         model.addAttribute("allMovies", allMovies);
         model.addAttribute("pageNumberList", pageNumberList);
         model.addAttribute("activePage", page);
+        model.addAttribute("genreList", genreList);
+        model.addAttribute("countryList", countryList);
+
+        ModelAndView modelAndView = new ModelAndView("movies");
+        return modelAndView;
+    }
+    @GetMapping("/movies/genres/{genre}")
+    public ModelAndView moviesByGenre(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "16") int size, Model model, @PathVariable String genre) {
+        MovieRequest movieByGenreRequest = new MovieRequest("genre", genre, "desc", page - 1, size, "releaseYear");
+        Page<Movie> allMovies = movieService.getAllMoviesWithPagination(movieByGenreRequest);
+        int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages()).toArray();
+        List<Genre> genreList = genreService.getAllGenre();
+        List<Genre> countryList = genreService.getAllGenre();
+
+        model.addAttribute("title", genre + " Movies");
+        model.addAttribute("allMovies", allMovies);
+        model.addAttribute("pageNumberList", pageNumberList);
+        model.addAttribute("activePage", page);
+        model.addAttribute("genreList", genreList);
+        model.addAttribute("countryList", countryList);
 
         ModelAndView modelAndView = new ModelAndView("movies");
         return modelAndView;
@@ -80,15 +116,19 @@ public class PageController {
     @GetMapping("/movies/detail/{id}")
     public ModelAndView getMovieDetail(@PathVariable String id, Model model) {
         Movie movie = movieService.getMovieById(Integer.parseInt(id)).orElseThrow(null);
-        List<Genre> genreList = movieService.getGenresByMovieTitle(movie.getTitle());
-        List<Country> countryList = movieService.getCountriesByMovieTitle(movie.getTitle());
+        List<Genre> movieGenreList = movieService.getGenresByMovieTitle(movie.getTitle());
+        List<Country> movieCountryList = movieService.getCountriesByMovieTitle(movie.getTitle());
         MovieRequest recommendedMoviesRequest = new MovieRequest("title", movie.getTitle(), "desc", 0, 4, "releaseYear");
-        Page<Movie> recommendedMovies = movieService.getRecommendedMovies(genreList.stream().map(Genre::getName).toList(), recommendedMoviesRequest);
+        Page<Movie> recommendedMovies = movieService.getRecommendedMovies(movieGenreList.stream().map(Genre::getName).toList(), recommendedMoviesRequest);
+        List<Genre> genreList = genreService.getAllGenre();
+        List<Genre> countryList = genreService.getAllGenre();
 
         model.addAttribute("movie", movie);
+        model.addAttribute("movieGenreList", movieGenreList);
+        model.addAttribute("movieCountryList", movieCountryList);
+        model.addAttribute("recommendedMovies", recommendedMovies);
         model.addAttribute("genreList", genreList);
         model.addAttribute("countryList", countryList);
-        model.addAttribute("recommendedMovies", recommendedMovies);
         ModelAndView modelAndView = new ModelAndView("detail");
         return modelAndView;
     }

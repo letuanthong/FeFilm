@@ -14,7 +14,7 @@
 
 <body class="bg-main d-flex flex-column min-vh-100">
   <!-- Header -->
-  <nav th:replace="fragments/header :: header"></nav>
+  <nav th:replace="fragments/header :: header(genreList=${genreList}, countryList=${countryList})"></nav>
   <!-- End Header -->
   <!-- Body section -->
   <div class="body-content" style="flex: 1;">

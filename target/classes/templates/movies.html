@@ -12,13 +12,13 @@
 </head>
 <body class="bg-main d-flex flex-column min-vh-100">
     <!-- Header -->
-    <nav th:replace="fragments/header :: header"></nav>
+    <nav th:replace="fragments/header :: header(genreList=${genreList}, countryList=${countryList})"></nav>
     <!-- End header -->
     <!-- Body content -->
     <div class="body-content" style="flex: 1;">
         <section>
           <div class="container">
-              <h2 class="text-submain text-capitalize" id="heading-section" th:text="${title}"></h2>
+              <h2 class="text-submain border-4 border-start ps-3 border-submain bold text-capitalize" id="heading-section" th:text="${title}"></h2>
               <div class="mt-5 row" id="movie-list">
                   <div th:replace="fragments/movie-item :: movieItem (data=${allMovies})"></div>
               </div>

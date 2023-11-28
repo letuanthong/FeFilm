@@ -50,6 +50,9 @@ public class MovieServiceImpl implements MovieService {
             case "country":
                 movies = movieRepository.findAllDistinctByCountry(movieRequest.getValue(), pageRequest);
                 break;
+            case "genre":
+                movies = movieRepository.findAllDistinctByGenre(movieRequest.getValue(), pageRequest);
+                break;
             default:
                 movies = movieRepository.findAllDistinct(pageRequest);
                 break;

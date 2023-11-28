@@ -77,6 +77,15 @@ section {
     overflow: hidden;
 }
 
+.link-main {
+    color: var(--submain);
+}
+
+.link-main:active,
+.link-main:hover {
+    color: var(--red) !important;
+}
+
 .star-icon {
     color: var(--orange);
     line-height: 24px;
@@ -168,7 +177,7 @@ div[data-bookmark-status = "active"] {
 }
 
 .dropdown-menu {
-    --bs-dropdown-min-width: 25rem;
+    --bs-dropdown-min-width: fit-content;
     --bs-dropdown-padding-y: 0.8rem;
 }
 
