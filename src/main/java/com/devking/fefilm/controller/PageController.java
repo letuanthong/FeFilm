@@ -187,22 +187,7 @@ public class PageController {
 
         return "movies-search";
     }
-
-    @GetMapping("/login")
-    public ModelAndView login() {
-        ModelAndView modelAndView = new ModelAndView("login");
-        return modelAndView;
-    }
-    @GetMapping("/register")
-    public ModelAndView register() {
-        ModelAndView modelAndView = new ModelAndView("register");
-        return modelAndView;
-    }
-    @GetMapping("/forgot")
-    public ModelAndView forgot() {
-        ModelAndView modelAndView = new ModelAndView("forgot");
-        return modelAndView;
-    }
+    
 //>>>>>>> 55b22c570ce039bfdb796e638a44d44cbfa84c08
 
 }
