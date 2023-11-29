@@ -48,12 +48,14 @@
       </ul>
       <ul class="navbar-nav align-items-center gap-2 d-none d-lg-flex position-relative">
         <li class="nav-item">
-          <a class="nav-link text-main search-icon" aria-current="page" href="#">
-            <i class="fa-solid fa-magnifying-glass nav-icon"></i>
-          </a>
+          <form method="get" th:action="${'/movies/search'}" class="d-flex align-items-center gap-3">
+            <input type="text" class="form-control" id="search-movie" name="q" th:value="${q}" style="width: 300px" placeholder="Search...">
+            <input type="hidden" class="form-control" name="page" value="1">
+            <input type="hidden" class="form-control" name="size" value="8">
+          </form>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-main" id="nav-bookmark-icon" href="#" data-request-name="Bookmark Movies" data-request-type="bookmarks" data-request-condition="" data-request-value="">
+          <a class="nav-link text-main" id="nav-bookmark-icon" th:href="'/movies/bookmarks?page=1&size=8'">
             <i class="fa-solid fa-bookmark nav-icon"></i>
           </a>
         </li>
@@ -62,9 +64,3 @@
     </div>
   </div>
 </nav>
-<div class="container d-none search-area">
-  <div class="d-flex align-items-center justify-content-end gap-3">
-    <input type="text" class="bg-main text-white px-2 py-1 rounded" placeholder="Search movie">
-    <a class="btn btn-outline-success" id="search-btn" data-request-type="allmovies" data-request-condition="search">Search</a>
-  </div>
-</div>

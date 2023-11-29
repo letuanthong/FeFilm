@@ -5,6 +5,7 @@ import com.devking.fefilm.model.Genre;
 import com.devking.fefilm.model.Movie;
 import com.devking.fefilm.model.request.MovieRequest;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;

@@ -41,6 +41,9 @@ public class Movie {
     @JoinColumn(name = "country_id", referencedColumnName = "country_id")
     private Country country;
 
-    @ManyToMany(mappedBy = "movies")
-    private Set<Comment> comments;
+    @OneToOne(mappedBy = "movie")
+    private Bookmark bookmark = null;
+//
+//    @ManyToMany(mappedBy = "movies")
+//    private Set<Comment> comments;
 }

@@ -27,11 +27,11 @@ public class Comment {
     private String content;
     @CreationTimestamp
     private Date createdAt;
-    @ManyToMany
-    @JoinTable(
-            name = "movie_comments",
-            joinColumns = @JoinColumn(name = "movieId"),
-            inverseJoinColumns = @JoinColumn(name = "commentId")
-    )
-    private Set<Movie> movies;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "movie_comments",
+//            joinColumns = @JoinColumn(name = "movieId"),
+//            inverseJoinColumns = @JoinColumn(name = "commentId")
+//    )
+//    private Set<Movie> movies;
 }

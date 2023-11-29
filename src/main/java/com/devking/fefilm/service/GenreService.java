@@ -7,8 +7,6 @@ import java.util.Optional;
 
 public interface GenreService {
     public List<Genre> getAllGenre();
-
-
     public void updateGenre(Genre genre);
 
     public void removeGenreById(int id);
