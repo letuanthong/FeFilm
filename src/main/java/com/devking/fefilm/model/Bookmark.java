@@ -15,9 +15,9 @@ public class Bookmark {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @OneToOne
-    @JoinColumn(name = "movieId")
+    @JoinColumn(name = "movie_id")
     private Movie movie;
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
 }

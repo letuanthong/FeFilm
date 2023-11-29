@@ -46,17 +46,12 @@ public class MovieServiceImpl implements MovieService {
         Page<Movie> movies;
         Pageable pageRequest;
         pageRequest = PageRequest.of(movieRequest.getPage(), movieRequest.getItemsPerPage(), Sort.by(movieRequest.getDirection().equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, movieRequest.getOrderByColumn()));
-        switch (movieRequest.getField()) {
-            case "country":
-                movies = movieRepository.findAllDistinctByCountry(movieRequest.getValue(), pageRequest);
-                break;
-            case "genre":
-                movies = movieRepository.findAllDistinctByGenre(movieRequest.getValue(), pageRequest);
-                break;
-            default:
-                movies = movieRepository.findAllDistinct(pageRequest);
-                break;
-        }
+        movies = switch (movieRequest.getField()) {
+            case "country" -> movieRepository.findAllDistinctByCountry(movieRequest.getValue(), pageRequest);
+            case "genre" -> movieRepository.findAllDistinctByGenre(movieRequest.getValue(), pageRequest);
+            case "title" -> movieRepository.findDistinctByTitleContaining(movieRequest.getValue(), pageRequest);
+            default -> movieRepository.findAllDistinct(pageRequest);
+        };
         return movies;
     }
 

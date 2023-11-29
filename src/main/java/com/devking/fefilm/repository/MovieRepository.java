@@ -27,4 +27,6 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     List<Country> findAllCountriesByMovieTitle(String title);
     @Query(value = "select m.id, m.title, m.releaseYear, m.overview, m.imageVerticalPath, m.imageHorizontalPath, m.videoPath, m.imdb, m.director, m.cast, m.genre_id, m.country_id from movies m join genres g on g.genre_id = m.genre_id where g.name in :genreList and m.title not like %:title% group by title", nativeQuery = true)
     Page<Movie> findRecommendedMovies(@Param("title") String title, @Param("genreList") List<String> genreList, Pageable pageable);
+    @Query(value = "select * from movies where title like %?1% group by title", nativeQuery = true)
+    Page<Movie> findDistinctByTitleContaining(String title, Pageable pageable);
 }

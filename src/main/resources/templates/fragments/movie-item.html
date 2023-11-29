@@ -5,6 +5,13 @@
                 <i class="fa-solid fa-star star-icon"></i>
                 <span class="fw-bold" th:text="${movie.getImdb()}"></span>
             </div>
+            <form method="post" th:action="${'/movies/bookmarks?page=1&size=8'}" th:object="${bookmark}">
+                <input type="hidden" id="movie" name="movie" th:value="${movie.getId()}">
+                <input type="hidden" id="user" name="user" th:value="1">
+                <button type="submit" th:attr="class='btn btn-link p-2 overlay-rounded' + ${movie.getBookmark() != null ? ' text-warning' : ' text-white'}">
+                    <i class="fa-solid fa-bookmark"></i>
+                </button>
+            </form>
         </div>
         <img th:src="${movie.getImageVerticalPath()}" alt="Movie" class="img-cover rounded">
         <div class="overlay position-absolute bottom-0 start-50 translate-middle-x d-flex align-items-center justify-content-between w-100 px-3 py-2">
