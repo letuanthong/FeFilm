@@ -133,20 +133,5 @@ public class PageController {
         return modelAndView;
     }
 
-    @GetMapping("/login")
-    public ModelAndView login() {
-        ModelAndView modelAndView = new ModelAndView("login");
-        return modelAndView;
-    }
-    @GetMapping("/register")
-    public ModelAndView register() {
-        ModelAndView modelAndView = new ModelAndView("register");
-        return modelAndView;
-    }
-    @GetMapping("/forgot")
-    public ModelAndView forgot() {
-        ModelAndView modelAndView = new ModelAndView("forgot");
-        return modelAndView;
-    }
 
 }

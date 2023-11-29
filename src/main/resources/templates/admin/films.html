@@ -27,8 +27,8 @@
         <tr th:each="film, iStat : ${films}">
             <th scope="row" th:text="${iStat.index + 1}">1</th>
             <td th:text="${film.title}">Larry</td>
-            <td th:text="${film.genre.name}">Larry</td>
-            <td th:text="${film.country.name}">Larry</td>
+            <td th:text="${film.genre != null ? film.genre.name : 'None'}">Larry</td>
+            <td th:text="${film.country != null ? film.country.name : 'None'}">Larry</td>
 <!--            <td>-->
 <!--                <span th:each="genres : ${film.genre}" th:text="${genres.name}"></span>-->
 <!--            </td>-->

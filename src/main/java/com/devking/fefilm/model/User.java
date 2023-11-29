@@ -5,10 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
@@ -24,11 +24,21 @@ public class User {
     private String password;
     private String avatar;
     private String display_name;
-    @ManyToMany
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "roleId")
-    )
-    private Set<Role> roles;
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "users_roles",
+//            joinColumns = @JoinColumn(name = "userId"),
+//            inverseJoinColumns = @JoinColumn(name = "roleId")
+//    )
+    private Set<Users_Roles> usersRoles;
+
+    public User() {
+        this.usersRoles = new HashSet<>();
+    }
+
+    public User(User user) {
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+        this.usersRoles = user.getUsersRoles();
+    }
 }
