@@ -1,0 +1,17 @@
+<form method="get" action="/movies" class="mt-4 pt-1 d-flex align-items-center gap-3" th:fragment="filterMovies (genreList, countryList)">
+  <select class="form-select" name="genre" aria-label="Genre Selection">
+    <option selected>Genre</option>
+    <option th:each="genre: ${genreList}" th:value="${genre.getName()}" th:text="${genre.getName()}"></option>
+  </select>
+  <select class="form-select" name="country" aria-label="Country Selection">
+    <option selected>Country</option>
+    <option th:each="country: ${countryList}" th:value="${country.getName()}" th:text="${country.getName()}"></option>
+  </select>
+  <select class="form-select" name="orderByColumn" aria-label="Sort selection">
+    <option selected value="releaseYear">Latest</option>
+    <option value="imdb">IMDb</option>
+  </select>
+  <input type="hidden" name="page" value="1">
+  <input type="hidden" name="size" value="8">
+  <button type="submit" class="btn btn-danger">Filter</button>
+</form>

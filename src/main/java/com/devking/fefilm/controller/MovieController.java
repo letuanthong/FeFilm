@@ -1,14 +1,8 @@
 package com.devking.fefilm.controller;
 
-import com.devking.fefilm.model.Bookmark;
-import com.devking.fefilm.model.Country;
-import com.devking.fefilm.model.Genre;
-import com.devking.fefilm.model.Movie;
+import com.devking.fefilm.model.*;
 import com.devking.fefilm.model.request.MovieRequest;
-import com.devking.fefilm.service.BookmarkService;
-import com.devking.fefilm.service.CountryService;
-import com.devking.fefilm.service.GenreService;
-import com.devking.fefilm.service.MovieService;
+import com.devking.fefilm.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +16,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 @Controller
-public class PageController {
+public class MovieController {
     @Autowired
     private MovieService movieService;
     @Autowired
@@ -31,45 +25,28 @@ public class PageController {
     private CountryService countryService;
     @Autowired
     private BookmarkService bookmarkService;
+    @Autowired
+    private UserService userService;
 
-    @GetMapping("")
-    public ModelAndView index(Model model) {
-        MovieRequest carouselMovieRequest = new MovieRequest("", "", "desc", 0, 3, "releaseYear");
-        MovieRequest popularMovieRequest = new MovieRequest("", "", "desc", 0, 5, "imdb");
-        MovieRequest chineseMovieRequest = new MovieRequest("country", "China", "desc", 0, 5, "imdb");
-        MovieRequest koreaMovieRequest = new MovieRequest("country", "South Korea", "desc", 0, 5, "imdb");
-        MovieRequest japanMovieRequest = new MovieRequest("country", "Japan", "desc", 0, 5, "imdb");
-        MovieRequest hongkongMovieRequest = new MovieRequest("country", "HongKong", "desc", 0, 5, "imdb");
-
-        Page<Movie> carouselMovies = movieService.getAllMoviesWithPagination(carouselMovieRequest);
-        Page<Movie> popularMovies = movieService.getAllMoviesWithPagination(popularMovieRequest);
-        Page<Movie> chineseMovies = movieService.getAllMoviesWithPagination(chineseMovieRequest);
-        Page<Movie> koreaMovies = movieService.getAllMoviesWithPagination(koreaMovieRequest);
-        Page<Movie> japanMovies = movieService.getAllMoviesWithPagination(japanMovieRequest);
-        Page<Movie> hongKongMovies = movieService.getAllMoviesWithPagination(hongkongMovieRequest);
-        List<Genre> genreList = genreService.getAllGenre();
-        List<Country> countryList = countryService.getAllCountry();
-
-        model.addAttribute("carouselMovies", carouselMovies);
-        model.addAttribute("popularMovies", popularMovies);
-        model.addAttribute("chineseMovies", chineseMovies);
-        model.addAttribute("koreaMovies", koreaMovies);
-        model.addAttribute("japanMovies", japanMovies);
-        model.addAttribute("hongKongMovies", hongKongMovies);
-        model.addAttribute("genreList", genreList);
-        model.addAttribute("countryList", countryList);
-        model.addAttribute("bookmark", new Bookmark());
-        ModelAndView modelAndView = new ModelAndView("index");
-        return modelAndView;
-    }
 
     @GetMapping("/movies")
-    public ModelAndView movies(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "16") int size, @RequestParam(value = "orderByColumn", defaultValue = "releaseYear") String orderByColumn, Model model) {
-        MovieRequest allMoviesRequest = new MovieRequest("", "", "desc", page - 1, size, orderByColumn);
-        Page<Movie> allMovies = movieService.getAllMoviesWithPagination(allMoviesRequest);
+    public ModelAndView movies(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "16") int size, @RequestParam(value = "orderByColumn", defaultValue = "releaseYear") String orderByColumn, @RequestParam(value = "country", defaultValue = "Country") String country, @RequestParam(value = "genre", defaultValue = "Genre") String genre, Model model) {
+        MovieRequest allMoviesRequest;
+        Page<Movie> allMovies;
+        if (!country.equalsIgnoreCase("Country") && genre.equalsIgnoreCase("Genre")) {
+            allMoviesRequest = new MovieRequest("country", country, "desc", page - 1, size, orderByColumn);
+        } else if (country.equalsIgnoreCase("Country") && !genre.equalsIgnoreCase("Genre")) {
+            allMoviesRequest = new MovieRequest("genre", genre, "desc", page - 1, size, orderByColumn);
+        } else if (!country.equalsIgnoreCase("Country") && !genre.equalsIgnoreCase("Genre")) {
+            allMoviesRequest = new MovieRequest("genre&country", genre + "&" + country, "desc", page - 1, size, orderByColumn);
+        } else {
+            allMoviesRequest = new MovieRequest("", "", "desc", page - 1, size, orderByColumn);
+        }
+        allMovies = movieService.getAllMoviesWithPagination(allMoviesRequest);
         int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages()).toArray();
         List<Genre> genreList = genreService.getAllGenre();
-        List<Genre> countryList = genreService.getAllGenre();
+        List<Country> countryList = countryService.getAllCountry();
+        User currentUser = userService.getCurrentLoggingUser();
 
         model.addAttribute("title", "Popular Movies");
         model.addAttribute("allMovies", allMovies);
@@ -77,6 +54,7 @@ public class PageController {
         model.addAttribute("activePage", page);
         model.addAttribute("genreList", genreList);
         model.addAttribute("countryList", countryList);
+        model.addAttribute("currentUser", currentUser);
 
         ModelAndView modelAndView = new ModelAndView("movies");
         return modelAndView;
@@ -89,6 +67,7 @@ public class PageController {
         int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages()).toArray();
         List<Genre> genreList = genreService.getAllGenre();
         List<Country> countryList = countryService.getAllCountry();
+        User currentUser = userService.getCurrentLoggingUser();
 
         model.addAttribute("title", country + " Movies");
         model.addAttribute("allMovies", allMovies);
@@ -97,10 +76,12 @@ public class PageController {
         model.addAttribute("genreList", genreList);
         model.addAttribute("countryList", countryList);
         model.addAttribute("country", country);
+        model.addAttribute("currentUser", currentUser);
 
         ModelAndView modelAndView = new ModelAndView("movies");
         return modelAndView;
     }
+
     @GetMapping("/movies/genres/{genre}")
     public ModelAndView moviesByGenre(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "16") int size, Model model, @PathVariable String genre) {
         MovieRequest movieByGenreRequest = new MovieRequest("genre", genre, "desc", page - 1, size, "releaseYear");
@@ -108,14 +89,16 @@ public class PageController {
         int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages()).toArray();
         List<Genre> genreList = genreService.getAllGenre();
         List<Country> countryList = countryService.getAllCountry();
+        User currentUser = userService.getCurrentLoggingUser();
 
         model.addAttribute("title", genre + " Movies");
         model.addAttribute("allMovies", allMovies);
         model.addAttribute("pageNumberList", pageNumberList);
         model.addAttribute("activePage", page);
         model.addAttribute("genreList", genreList);
-        model.addAttribute("genre", genre);
         model.addAttribute("countryList", countryList);
+        model.addAttribute("genre", genre);
+        model.addAttribute("currentUser", currentUser);
 
         ModelAndView modelAndView = new ModelAndView("movies-genres");
         return modelAndView;
@@ -130,6 +113,7 @@ public class PageController {
         Page<Movie> recommendedMovies = movieService.getRecommendedMovies(movieGenreList.stream().map(Genre::getName).toList(), recommendedMoviesRequest);
         List<Genre> genreList = genreService.getAllGenre();
         List<Country> countryList = countryService.getAllCountry();
+        User currentUser = userService.getCurrentLoggingUser();
 
         model.addAttribute("movie", movie);
         model.addAttribute("movieGenreList", movieGenreList);
@@ -137,12 +121,12 @@ public class PageController {
         model.addAttribute("recommendedMovies", recommendedMovies);
         model.addAttribute("genreList", genreList);
         model.addAttribute("countryList", countryList);
+        model.addAttribute("currentUser", currentUser);
+
         ModelAndView modelAndView = new ModelAndView("detail");
         return modelAndView;
     }
 
-//<<<<<<< HEAD
-//=======
     @PostMapping("/movies/bookmarks")
     public String addBookmark(@ModelAttribute Bookmark bookmark, Model model) {
         Bookmark existedBookmark = bookmarkService.getBookmarkByMovie(bookmark.getMovie());
@@ -154,10 +138,13 @@ public class PageController {
         model.addAttribute("bookmark", bookmark);
         return "redirect:/movies/bookmarks?page=1&size=8";
     }
+
     @GetMapping("/movies/bookmarks")
     public String getBookmark(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "16") int size, Model model) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<Movie> allMovies = bookmarkService.getAllBookmarkMovies(pageable);
+        User currentUser = userService.getCurrentLoggingUser();
+
+        Page<Movie> allMovies = bookmarkService.getAllBookmarkMovies(currentUser.getId(), pageable);
         int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages()).toArray();
         List<Genre> genreList = genreService.getAllGenre();
         List<Country> countryList = countryService.getAllCountry();
@@ -168,8 +155,11 @@ public class PageController {
         model.addAttribute("activePage", page);
         model.addAttribute("genreList", genreList);
         model.addAttribute("countryList", countryList);
+        model.addAttribute("currentUser", currentUser);
+
         return "movies-bookmarks";
     }
+
     @GetMapping("/movies/search")
     public String getSearchMovie(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "16") int size, @RequestParam(value = "q", defaultValue = "") String query, Model model) {
         MovieRequest movieBySearchRequest = new MovieRequest("title", query, "desc", page - 1, size, "releaseYear");
@@ -177,6 +167,7 @@ public class PageController {
         int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages()).toArray();
         List<Genre> genreList = genreService.getAllGenre();
         List<Country> countryList = countryService.getAllCountry();
+        User currentUser = userService.getCurrentLoggingUser();
 
         model.addAttribute("title", "Search Movies");
         model.addAttribute("allMovies", allMovies);
@@ -184,10 +175,8 @@ public class PageController {
         model.addAttribute("activePage", page);
         model.addAttribute("genreList", genreList);
         model.addAttribute("countryList", countryList);
+        model.addAttribute("currentUser", currentUser);
 
         return "movies-search";
     }
-    
-//>>>>>>> 55b22c570ce039bfdb796e638a44d44cbfa84c08
-
 }

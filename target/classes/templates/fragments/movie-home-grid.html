@@ -1,4 +1,4 @@
-<section th:fragment="gridHomeMovie (title, data, url)">
+<section th:fragment="gridHomeMovie (title, data, url, currentUser)">
     <div class="container-lg">
         <div class="d-flex align-items-center justify-content-between">
             <h2 class="text-submain border-4 border-start ps-3 border-submain bold" th:text="${title}"></h2>
@@ -18,8 +18,8 @@
                         </div>
                         <form method="post" th:action="${'/movies/bookmarks?page=1&size=8'}" th:object="${bookmark}">
                             <input type="hidden" id="movie" name="movie" th:value="${movie.getId()}">
-                            <input type="hidden" id="user" name="user" th:value="1">
-                            <button type="submit" th:attr="class='btn btn-link p-2 overlay-rounded' + ${movie.getBookmark() != null ? ' text-warning' : ' text-white'}">
+                            <input type="hidden" id="user" name="user" th:value="${currentUser.getId()}">
+                            <button type="submit" th:attr="class='btn btn-link p-2 overlay-rounded' + ${(movie.getBookmark() != null && movie.getBookmark().getUser().getId() == currentUser.getId()) ? ' text-warning' : ' text-white'}">
                                 <i class="fa-solid fa-bookmark"></i>
                             </button>
                         </form>

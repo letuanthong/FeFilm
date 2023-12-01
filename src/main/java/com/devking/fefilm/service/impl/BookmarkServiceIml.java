@@ -27,8 +27,8 @@ public class BookmarkServiceIml implements BookmarkService {
     }
 
     @Override
-    public Page<Movie> getAllBookmarkMovies(Pageable pageable) {
-        return bookmarkRepository.getAllBookmarkMovies(pageable);
+    public Page<Movie> getAllBookmarkMovies(Integer userID, Pageable pageable) {
+        return bookmarkRepository.getAllBookmarkMoviesByUserID(userID, pageable);
     }
 
     @Override

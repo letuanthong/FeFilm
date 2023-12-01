@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface BookmarkRepository extends JpaRepository<Bookmark, Integer> {
-    @Query("select movie from Bookmark")
-    Page<Movie> getAllBookmarkMovies(Pageable pageable);
+    @Query("select movie from Bookmark where user.id = ?1")
+    Page<Movie> getAllBookmarkMoviesByUserID(Integer userID, Pageable pageable);
     Bookmark findByMovie(Movie movie);
 }

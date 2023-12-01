@@ -42,19 +42,19 @@
 <!-- Start Movie List -->
     <div id="movie-wrapper">
     <!-- Start Popular Movie -->
-      <section th:replace="~{fragments/movie-home-grid :: gridHomeMovie (title='Popular Movies', data=${popularMovies}, url=${'/movies?page=1&size=8&orderByColumn=imdb'})}"></section>
+      <section th:replace="~{fragments/movie-home-grid :: gridHomeMovie (title='Popular Movies', data=${popularMovies}, url=${'/movies?page=1&size=8&orderByColumn=imdb'}, currentUser=${currentUser})}"></section>
       <!-- End Popular Movie -->
       <!-- Start Chinese Movie -->
-      <section th:replace="~{fragments/movie-home-grid :: gridHomeMovie (title='China Movies', data=${chineseMovies}, url=${'/movies/countries/china?page=1&size=8&orderByColumn=imdb'})}"></section>
+      <section th:replace="~{fragments/movie-home-grid :: gridHomeMovie (title='China Movies', data=${chineseMovies}, url=${'/movies/countries/china?page=1&size=8&orderByColumn=imdb'}, currentUser=${currentUser})}"></section>
       <!-- End Chinese Movie -->
       <!-- Start South Korea Movie -->
-      <section th:replace="~{fragments/movie-home-grid :: gridHomeMovie (title='South Korea Movies', data=${koreaMovies}, url=${'/movies/countries/south korea?page=1&size=8&orderByColumn=imdb'})}"></section>
+      <section th:replace="~{fragments/movie-home-grid :: gridHomeMovie (title='South Korea Movies', data=${koreaMovies}, url=${'/movies/countries/south korea?page=1&size=8&orderByColumn=imdb'}, currentUser=${currentUser})}"></section>
       <!-- End South Korea Movie -->
       <!-- Start Japanese Movie -->
-      <section th:replace="~{fragments/movie-home-grid :: gridHomeMovie (title='Japan Movies', data=${japanMovies}, url=${'/movies/countries/japan?page=1&size=8&orderByColumn=imdb'})}"></section>
+      <section th:replace="~{fragments/movie-home-grid :: gridHomeMovie (title='Japan Movies', data=${japanMovies}, url=${'/movies/countries/japan?page=1&size=8&orderByColumn=imdb'}, currentUser=${currentUser})}"></section>
       <!-- End Japanese Movie -->
       <!-- Start HongKong Movie -->
-      <section th:replace="~{fragments/movie-home-grid :: gridHomeMovie (title='HongKong Movies', data=${hongKongMovies}, url=${'/movies/countries/hongkong?page=1&size=8&orderByColumn=imdb'})}"></section>
+      <section th:replace="~{fragments/movie-home-grid :: gridHomeMovie (title='HongKong Movies', data=${hongKongMovies}, url=${'/movies/countries/hongkong?page=1&size=8&orderByColumn=imdb'}, currentUser=${currentUser})}"></section>
       <!-- End HongKong Movie -->
     </div>
   </div>

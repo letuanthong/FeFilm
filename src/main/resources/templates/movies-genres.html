@@ -20,7 +20,7 @@
         <div class="container">
             <h2 class="text-submain border-4 border-start ps-3 border-submain bold text-capitalize" id="heading-section" th:text="${title}"></h2>
             <div class="mt-5 row" id="movie-list">
-                <div th:replace="fragments/movie-item :: movieItem (data=${allMovies})"></div>
+                <div th:replace="fragments/movie-item :: movieItem (data=${allMovies}, currentUser=${currentUser})"></div>
             </div>
             <div class="d-flex align-items-center justify-content-center mt-4 gap-3 page-number-list">
                 <a th:each="page : ${pageNumberList}" th:href="'/movies/genres/' + ${genre} + '?page=' + ${page} + '&size=' + ${8}" th:text="${page}" th:attr="class='page-link-item page-number-item d-block text-white text-decoration-none rounded-circle px-3 py-2 ' + ${page == activePage ? 'bg-primary': ''}"></a>

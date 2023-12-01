@@ -10,7 +10,7 @@ import java.util.List;
 public interface BookmarkService {
     List<Bookmark> getAllBookmark();
     Bookmark saveBookmark(Bookmark bookmark);
-    Page<Movie> getAllBookmarkMovies(Pageable pageable);
+    Page<Movie> getAllBookmarkMovies(Integer userID, Pageable pageable);
     Bookmark getBookmarkByMovie(Movie movie);
     void deleteBookmark(Bookmark bookmark);
 }

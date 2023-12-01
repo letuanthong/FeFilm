@@ -1,4 +1,4 @@
-<div th:fragment="movieItem (data)" th:each="movie, i : ${data}" class="col-6 col-sm-4 col-lg-3 position-relative mb-4 px-2 movie-item">
+<div th:fragment="movieItem (data, currentUser)" th:each="movie, i : ${data}" class="col-6 col-sm-4 col-lg-3 position-relative mb-4 px-2 movie-item">
     <a th:href="'/movies/detail/' + ${movie.getId()}" class="movie-link overflow-hidden position-relative d-block text-white h-100">
         <div class="position-absolute top-0 start-0 px-3 py-2 d-flex align-items-center justify-content-between w-100">
             <div class="d-flex align-items-center justify-content-center gap-2 overlay-rounded-pill px-3 py-1 rounded-pill">
@@ -7,8 +7,8 @@
             </div>
             <form method="post" th:action="${'/movies/bookmarks?page=1&size=8'}" th:object="${bookmark}">
                 <input type="hidden" id="movie" name="movie" th:value="${movie.getId()}">
-                <input type="hidden" id="user" name="user" th:value="1">
-                <button type="submit" th:attr="class='btn btn-link p-2 overlay-rounded' + ${movie.getBookmark() != null ? ' text-warning' : ' text-white'}">
+                <input type="hidden" id="user" name="user" th:value="${currentUser.getId()}">
+                <button type="submit" th:attr="class='btn btn-link p-2 overlay-rounded' + ${(movie.getBookmark() != null && movie.getBookmark().getUser().getId() == currentUser.getId()) ? ' text-warning' : ' text-white'}">
                     <i class="fa-solid fa-bookmark"></i>
                 </button>
             </form>

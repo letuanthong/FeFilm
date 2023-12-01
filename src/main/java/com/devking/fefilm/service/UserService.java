@@ -9,4 +9,5 @@ public interface UserService {
     public User save(User user);
 
     Optional<User> getUserByEmail(String email);
+    User getCurrentLoggingUser();
 }
