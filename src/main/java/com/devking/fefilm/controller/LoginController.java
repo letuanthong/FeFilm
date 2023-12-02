@@ -2,8 +2,10 @@ package com.devking.fefilm.controller;
 
 import com.devking.fefilm.model.Role;
 import com.devking.fefilm.model.User;
+import com.devking.fefilm.model.Users_Roles;
 import com.devking.fefilm.service.RoleService;
 import com.devking.fefilm.service.UserService;
+import com.devking.fefilm.service.Users_RolesService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class LoginController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private Users_RolesService usersRolesService;
+
     @GetMapping("/login")
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView("login");
@@ -48,9 +53,15 @@ public class LoginController {
             String password = userModel.getPassword();
             userModel.setPassword(bCryptPasswordEncoder.encode(password));
             Role role = roleService.findRoleById(1).orElseThrow();
+            Users_Roles usersRoles = new Users_Roles();
+            usersRoles.setRole(role);
+            //usersRoles.setUser(userModel);
+            userService.save(userModel);
+            usersRoles.setUser(userService.getUserByEmail(userModel.getEmail()).get());
+            usersRolesService.save(usersRoles);
             //System.out.println(role);
 //            userModel.ge().add(role);
-            userService.save(userModel);
+
             return "redirect:/login";
         }else{
             return "redirect:/register";
