@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" th:href="@{css/style.css}">
+    <link rel="stylesheet" th:href="@{css/register.css}">
 </head>
 <body>
     <nav>
@@ -46,5 +47,22 @@
             <a href="#">Learn more.</a>
         </small>
     </div>
+    <div id="popup" class="popup">
+        <span class="popup-content" id="popup-content"></span>
+    </div>
+    <script th:if="${emailExists}">
+        document.addEventListener("DOMContentLoaded", function () {
+            var popup = document.getElementById('popup');
+            var popupContent = document.getElementById('popup-content');
+            popup.style.display = 'block';
+            popupContent.innerHTML = 'Email already exists. Please try another one.';
+
+            setTimeout(function () {
+                // Ẩn pop-up sau một khoảng thời gian (ví dụ: 3 giây)
+                popup.style.display = 'none';
+            }, 3000); // Thời gian tính bằng mili giây
+        });
+    </script>
+
 </body>
 </html>

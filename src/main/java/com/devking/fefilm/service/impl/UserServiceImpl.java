@@ -51,4 +51,9 @@ public class UserServiceImpl implements UserService {
         System.out.println(userDetails.getAuthorities().toString());
         return userDetails.getAuthorities().toString().contains("ADMIN");
     }
+
+    @Override
+    public boolean emailExists(String email) {
+        return userRepository.findUserByEmail(email).isPresent();
+    }
 }

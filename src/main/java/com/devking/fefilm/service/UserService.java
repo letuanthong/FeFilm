@@ -10,4 +10,6 @@ public interface UserService {
     Optional<User> getUserByEmail(String email);
     User getCurrentLoggingUser();
     boolean isAdmin();
+
+    boolean emailExists(String email);
 }

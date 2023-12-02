@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,10 +46,15 @@ public class LoginController {
     @GetMapping("/register")
     public ModelAndView register() {
         ModelAndView modelAndView = new ModelAndView("register");
+        modelAndView.addObject("emailExists", false);
         return modelAndView;
     }
     @PostMapping("/register")
-    public String registerPost(@ModelAttribute User userModel, @RequestParam("confirm") String confirm) throws ServletException {
+    public String registerPost(@ModelAttribute User userModel, @RequestParam("confirm") String confirm, Model model) throws ServletException {
+        if (userService.emailExists(userModel.getEmail())) {
+            model.addAttribute("emailExists", true);
+            return "register"; // Trả về trang đăng ký với thông báo lỗi
+        }
         if (Objects.equals(confirm, userModel.getPassword())){
             String password = userModel.getPassword();
             userModel.setPassword(bCryptPasswordEncoder.encode(password));
