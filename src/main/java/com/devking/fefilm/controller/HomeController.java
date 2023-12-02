@@ -41,6 +41,7 @@ public class HomeController {
         List<Genre> genreList = genreService.getAllGenre();
         List<Country> countryList = countryService.getAllCountry();
         User currentUser = userService.getCurrentLoggingUser();
+        boolean isAdmin = userService.isAdmin();
 
         model.addAttribute("carouselMovies", carouselMovies);
         model.addAttribute("popularMovies", popularMovies);
@@ -52,6 +53,7 @@ public class HomeController {
         model.addAttribute("countryList", countryList);
         model.addAttribute("bookmark", new Bookmark());
         model.addAttribute("currentUser", currentUser);
+        model.addAttribute("isAdmin", isAdmin);
 
         ModelAndView modelAndView = new ModelAndView("index");
         return modelAndView;

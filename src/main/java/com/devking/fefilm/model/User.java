@@ -22,8 +22,6 @@ public class User {
     private String email;
     @Column(nullable = false)
     private String password;
-    private String avatar;
-    private String display_name;
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
 //    @JoinTable(
 //            name = "users_roles",

@@ -47,6 +47,7 @@ public class MovieController {
         List<Genre> genreList = genreService.getAllGenre();
         List<Country> countryList = countryService.getAllCountry();
         User currentUser = userService.getCurrentLoggingUser();
+        boolean isAdmin = userService.isAdmin();
 
         model.addAttribute("title", "Popular Movies");
         model.addAttribute("allMovies", allMovies);
@@ -55,6 +56,7 @@ public class MovieController {
         model.addAttribute("genreList", genreList);
         model.addAttribute("countryList", countryList);
         model.addAttribute("currentUser", currentUser);
+        model.addAttribute("isAdmin", isAdmin);
 
         ModelAndView modelAndView = new ModelAndView("movies");
         return modelAndView;
@@ -68,6 +70,7 @@ public class MovieController {
         List<Genre> genreList = genreService.getAllGenre();
         List<Country> countryList = countryService.getAllCountry();
         User currentUser = userService.getCurrentLoggingUser();
+        boolean isAdmin = userService.isAdmin();
 
         model.addAttribute("title", country + " Movies");
         model.addAttribute("allMovies", allMovies);
@@ -77,6 +80,7 @@ public class MovieController {
         model.addAttribute("countryList", countryList);
         model.addAttribute("country", country);
         model.addAttribute("currentUser", currentUser);
+        model.addAttribute("isAdmin", isAdmin);
 
         ModelAndView modelAndView = new ModelAndView("movies");
         return modelAndView;
@@ -90,6 +94,7 @@ public class MovieController {
         List<Genre> genreList = genreService.getAllGenre();
         List<Country> countryList = countryService.getAllCountry();
         User currentUser = userService.getCurrentLoggingUser();
+        boolean isAdmin = userService.isAdmin();
 
         model.addAttribute("title", genre + " Movies");
         model.addAttribute("allMovies", allMovies);
@@ -99,6 +104,7 @@ public class MovieController {
         model.addAttribute("countryList", countryList);
         model.addAttribute("genre", genre);
         model.addAttribute("currentUser", currentUser);
+        model.addAttribute("isAdmin", isAdmin);
 
         ModelAndView modelAndView = new ModelAndView("movies-genres");
         return modelAndView;
@@ -114,6 +120,7 @@ public class MovieController {
         List<Genre> genreList = genreService.getAllGenre();
         List<Country> countryList = countryService.getAllCountry();
         User currentUser = userService.getCurrentLoggingUser();
+        boolean isAdmin = userService.isAdmin();
 
         model.addAttribute("movie", movie);
         model.addAttribute("movieGenreList", movieGenreList);
@@ -122,6 +129,7 @@ public class MovieController {
         model.addAttribute("genreList", genreList);
         model.addAttribute("countryList", countryList);
         model.addAttribute("currentUser", currentUser);
+        model.addAttribute("isAdmin", isAdmin);
 
         ModelAndView modelAndView = new ModelAndView("detail");
         return modelAndView;
@@ -143,6 +151,7 @@ public class MovieController {
     public String getBookmark(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "16") int size, Model model) {
         Pageable pageable = PageRequest.of(page - 1, size);
         User currentUser = userService.getCurrentLoggingUser();
+        boolean isAdmin = userService.isAdmin();
 
         Page<Movie> allMovies = bookmarkService.getAllBookmarkMovies(currentUser.getId(), pageable);
         int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages()).toArray();
@@ -156,6 +165,7 @@ public class MovieController {
         model.addAttribute("genreList", genreList);
         model.addAttribute("countryList", countryList);
         model.addAttribute("currentUser", currentUser);
+        model.addAttribute("isAdmin", isAdmin);
 
         return "movies-bookmarks";
     }
@@ -168,6 +178,7 @@ public class MovieController {
         List<Genre> genreList = genreService.getAllGenre();
         List<Country> countryList = countryService.getAllCountry();
         User currentUser = userService.getCurrentLoggingUser();
+        boolean isAdmin = userService.isAdmin();
 
         model.addAttribute("title", "Search Movies");
         model.addAttribute("allMovies", allMovies);
@@ -176,6 +187,7 @@ public class MovieController {
         model.addAttribute("genreList", genreList);
         model.addAttribute("countryList", countryList);
         model.addAttribute("currentUser", currentUser);
+        model.addAttribute("isAdmin", isAdmin);
 
         return "movies-search";
     }

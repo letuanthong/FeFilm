@@ -22,6 +22,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User updateUser(User user) {
+        User oldUser = userRepository.findById(user.getId()).orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
+        oldUser.setEmail(user.getEmail());
+        oldUser.setUsername(user.getUsername());
+        oldUser.setPassword(user.getPassword());
+        return userRepository.save(oldUser);
+    }
+
+    @Override
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
@@ -33,5 +42,13 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = getUserByEmail(userDetails.getUsername());
         user.orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
         return user.get();
+    }
+
+    @Override
+    public boolean isAdmin() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        System.out.println(userDetails.getAuthorities().toString());
+        return userDetails.getAuthorities().toString().contains("ADMIN");
     }
 }

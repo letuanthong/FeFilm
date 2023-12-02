@@ -12,7 +12,7 @@
 </head>
 <body class="bg-main d-flex flex-column min-vh-100">
 <!-- Header -->
-<nav th:replace="fragments/header :: header(genreList=${genreList}, countryList=${countryList})"></nav>
+<nav th:replace="fragments/header :: header(genreList=${genreList}, countryList=${countryList}, isAdmin=${isAdmin})"></nav>
 <!-- End header -->
 <!-- Body content -->
 <div class="body-content" style="flex: 1;">
