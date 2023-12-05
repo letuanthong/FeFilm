@@ -132,7 +132,6 @@ public class MovieController {
         model.addAttribute("countryList", countryList);
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("isAdmin", isAdmin);
-
         ModelAndView modelAndView = new ModelAndView("detail");
         return modelAndView;
     }
