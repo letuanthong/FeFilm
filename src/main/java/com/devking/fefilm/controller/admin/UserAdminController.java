@@ -6,6 +6,7 @@ import com.devking.fefilm.model.User;
 import com.devking.fefilm.service.UserService;
 import com.devking.fefilm.service.Users_RolesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,7 @@ public class UserAdminController {
     }
     @PostMapping("/users/updateuser")
     public String postUser(@ModelAttribute("user") User user){
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userService.updateUser(user);
         return "redirect:/admin/users";
     }
