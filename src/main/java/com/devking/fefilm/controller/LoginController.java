@@ -58,16 +58,12 @@ public class LoginController {
         if (Objects.equals(confirm, userModel.getPassword())){
             String password = userModel.getPassword();
             userModel.setPassword(bCryptPasswordEncoder.encode(password));
-            Role role = roleService.findRoleById(1).orElseThrow();
+            Role role = roleService.findRoleByName("USER");
             Users_Roles usersRoles = new Users_Roles();
             usersRoles.setRole(role);
-            //usersRoles.setUser(userModel);
             userService.save(userModel);
             usersRoles.setUser(userService.getUserByEmail(userModel.getEmail()).get());
             usersRolesService.save(usersRoles);
-            //System.out.println(role);
-//            userModel.ge().add(role);
-
             return "redirect:/login";
         }else{
             return "redirect:/register";

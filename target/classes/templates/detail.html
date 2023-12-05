@@ -74,7 +74,7 @@
         <div class="container">
             <h2 class="text-submain border-4 border-start ps-3 border-submain bold mb-4">You may also like</h2>
             <div class="row" id="recommendation-movie">
-                <div th:replace="fragments/movie-item :: movieItem (data=${recommendedMovies})"></div>
+                <div th:replace="fragments/movie-item :: movieItem (data=${recommendedMovies}, currentUser=${currentUser})"></div>
             </div>
         </div>
     </section>
