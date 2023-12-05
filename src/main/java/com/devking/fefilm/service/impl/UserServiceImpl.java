@@ -1,6 +1,5 @@
 package com.devking.fefilm.service.impl;
 
-import com.devking.fefilm.model.Country;
 import com.devking.fefilm.model.User;
 import com.devking.fefilm.repository.UserRepository;
 import com.devking.fefilm.service.UserService;
@@ -38,6 +37,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> getUserById(int id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
     public User getCurrentLoggingUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -57,6 +61,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUser() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public void removeUserById(int id) {
+        userRepository.deleteById(id);
     }
 
     @Override

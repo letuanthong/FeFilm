@@ -22,6 +22,9 @@
             <th scope="row" th:text="${user.id}">1</th>
             <td th:text="${user.username}">Larry</td>
             <td th:text="${user.password}">Larry</td>
+
+            <td><a href="" th:href="@{/admin/users/delete/{id}(id=${user.id})}" class="btn btn-danger">Delete</a></td>
+
         </tr>
         </tbody>
     </table>
