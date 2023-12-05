@@ -1,5 +1,6 @@
 package com.devking.fefilm.service.impl;
 
+import com.devking.fefilm.model.Country;
 import com.devking.fefilm.model.User;
 import com.devking.fefilm.repository.UserRepository;
 import com.devking.fefilm.service.UserService;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -50,6 +52,11 @@ public class UserServiceImpl implements UserService {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         System.out.println(userDetails.getAuthorities().toString());
         return userDetails.getAuthorities().toString().contains("ADMIN");
+    }
+
+    @Override
+    public List<User> getAllUser() {
+        return userRepository.findAll();
     }
 
     @Override
