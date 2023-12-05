@@ -23,7 +23,7 @@
         <div th:replace="fragments/movie-item :: movieItem (data=${allMovies}, currentUser=${currentUser})"></div>
       </div>
       <div class="d-flex align-items-center justify-content-center mt-4 gap-3 page-number-list">
-        <a th:each="page : ${pageNumberList}" th:href="'/movies/search?q=' + ${query} + 'page=' + ${page} + '&size=' + ${8}" th:text="${page}" th:attr="class='page-link-item page-number-item d-block text-white text-decoration-none rounded-circle px-3 py-2 ' + ${page == activePage ? 'bg-primary': ''}"></a>
+        <a th:each="page : ${pageNumberList}" th:href="'/movies/search?q=' + ${query} + '&page=' + ${page} + '&size=' + ${8}" th:text="${page}" th:attr="class='page-link-item page-number-item d-block text-white text-decoration-none rounded-circle px-3 py-2 ' + ${page == activePage ? 'bg-primary': ''}"></a>
       </div>
     </div>
   </section>

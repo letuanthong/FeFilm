@@ -43,7 +43,7 @@ public class MovieController {
             allMoviesRequest = new MovieRequest("", "", "desc", page - 1, size, orderByColumn);
         }
         allMovies = movieService.getAllMoviesWithPagination(allMoviesRequest);
-        int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages()).toArray();
+        int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages()+ 1).toArray();
         List<Genre> genreList = genreService.getAllGenre();
         List<Country> countryList = countryService.getAllCountry();
         User currentUser = userService.getCurrentLoggingUser();
@@ -57,6 +57,8 @@ public class MovieController {
         model.addAttribute("countryList", countryList);
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("isAdmin", isAdmin);
+        model.addAttribute("country", country);
+        model.addAttribute("genre", genre);
 
         ModelAndView modelAndView = new ModelAndView("movies");
         return modelAndView;
@@ -66,7 +68,7 @@ public class MovieController {
     public ModelAndView moviesByCountry(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "16") int size, Model model, @PathVariable String country) {
         MovieRequest movieByCountryRequest = new MovieRequest("country", country, "desc", page - 1, size, "releaseYear");
         Page<Movie> allMovies = movieService.getAllMoviesWithPagination(movieByCountryRequest);
-        int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages()).toArray();
+        int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages() + 1).toArray();
         List<Genre> genreList = genreService.getAllGenre();
         List<Country> countryList = countryService.getAllCountry();
         User currentUser = userService.getCurrentLoggingUser();
@@ -82,7 +84,7 @@ public class MovieController {
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("isAdmin", isAdmin);
 
-        ModelAndView modelAndView = new ModelAndView("movies");
+        ModelAndView modelAndView = new ModelAndView("movies-countries");
         return modelAndView;
     }
 
@@ -90,7 +92,7 @@ public class MovieController {
     public ModelAndView moviesByGenre(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "16") int size, Model model, @PathVariable String genre) {
         MovieRequest movieByGenreRequest = new MovieRequest("genre", genre, "desc", page - 1, size, "releaseYear");
         Page<Movie> allMovies = movieService.getAllMoviesWithPagination(movieByGenreRequest);
-        int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages()).toArray();
+        int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages() + 1).toArray();
         List<Genre> genreList = genreService.getAllGenre();
         List<Country> countryList = countryService.getAllCountry();
         User currentUser = userService.getCurrentLoggingUser();
@@ -154,7 +156,7 @@ public class MovieController {
         boolean isAdmin = userService.isAdmin();
 
         Page<Movie> allMovies = bookmarkService.getAllBookmarkMovies(currentUser.getId(), pageable);
-        int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages()).toArray();
+        int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages() + 1).toArray();
         List<Genre> genreList = genreService.getAllGenre();
         List<Country> countryList = countryService.getAllCountry();
 
@@ -174,7 +176,7 @@ public class MovieController {
     public String getSearchMovie(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "16") int size, @RequestParam(value = "q", defaultValue = "") String query, Model model) {
         MovieRequest movieBySearchRequest = new MovieRequest("title", query, "desc", page - 1, size, "releaseYear");
         Page<Movie> allMovies = movieService.getAllMoviesWithPagination(movieBySearchRequest);
-        int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages()).toArray();
+        int[] pageNumberList = IntStream.range(1, allMovies.getTotalPages() + 1).toArray();
         List<Genre> genreList = genreService.getAllGenre();
         List<Country> countryList = countryService.getAllCountry();
         User currentUser = userService.getCurrentLoggingUser();
@@ -187,6 +189,7 @@ public class MovieController {
         model.addAttribute("genreList", genreList);
         model.addAttribute("countryList", countryList);
         model.addAttribute("currentUser", currentUser);
+        model.addAttribute("query", query);
         model.addAttribute("isAdmin", isAdmin);
 
         return "movies-search";

@@ -46,7 +46,7 @@
                     <p class="text-white-50 truncate-text mt-2 mb-3" th:text="${movie.getOverview()}"></p>
                     <div class="mt-2 d-flex align-items-center gap-2 limit-half-length">
                         <span>Genre: </span>
-                        <span th:each="genre, i : ${movieGenreList}" class="text-white-50" th:text="${(i.index == genreList.size() - 1) ? genre.getName() : genre.getName() + ', '}"></span>
+                        <span th:each="genre, i : ${movieGenreList}" class="text-white-50" th:text="${(i.index == movieGenreList.size() - 1) ? genre.getName() : genre.getName() + ', '}"></span>
                     </div>
                     <div class="mt-2 d-flex align-items-center gap-2 limit-half-length">
                         <span>Director: </span>
@@ -62,7 +62,7 @@
                     </div>
                     <div class="mt-2 d-flex align-items-center gap-2 limit-half-length">
                         <span>Country: </span>
-                        <span th:each="country, i : ${movieCountryList}" class="text-white-50" th:text="${(i.index == countryList.size() - 1) ? country.getName() : country.getName() + ', '}"></span>
+                        <span th:each="country, i : ${movieCountryList}" class="text-white-50" th:text="${(i.index == movieCountryList.size() - 1) ? country.getName() : country.getName() + ', '}"></span>
                     </div>
                 </div>
             </div>
@@ -74,7 +74,7 @@
         <div class="container">
             <h2 class="text-submain border-4 border-start ps-3 border-submain bold mb-4">You may also like</h2>
             <div class="row" id="recommendation-movie">
-                <div th:replace="fragments/movie-item :: movieItem (data=${recommendedMovies})"></div>
+                <div th:replace="fragments/movie-item :: movieItem (data=${recommendedMovies}, currentUser=${currentUser})"></div>
             </div>
         </div>
     </section>
