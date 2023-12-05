@@ -33,6 +33,21 @@ public class UserAdminController {
         userService.removeUserById(id);
         return "redirect:/admin/users";
     }
+    @GetMapping("/users/update/{id}")
+    public String updateUser(@PathVariable int id, Model model){
+        Optional<User> user = userService.getUserById(id);
+        if(user.isPresent()){
+            model.addAttribute("user", user.get());
+            return "/admin/usersUpdate";
+        }else {
+            return "redirect:/admin/users";
+        }
+    }
+    @PostMapping("/users/updateuser")
+    public String postUser(@ModelAttribute("user") User user){
+        userService.updateUser(user);
+        return "redirect:/admin/users";
+    }
 
 }
 

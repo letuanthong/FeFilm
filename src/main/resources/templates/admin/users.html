@@ -13,7 +13,9 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Name</th>
-            <th scope="col">Password</th>
+            <th scope="col">Email</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Update</th>
         </tr>
         </thead>
         <tbody>
@@ -21,10 +23,9 @@
         <tr th:each="user, iStat : ${users}">
             <th scope="row" th:text="${user.id}">1</th>
             <td th:text="${user.username}">Larry</td>
-            <td th:text="${user.password}">Larry</td>
-
+            <td th:text="${user.email}">Larry</td>
             <td><a href="" th:href="@{/admin/users/delete/{id}(id=${user.id})}" class="btn btn-danger">Delete</a></td>
-
+            <td><a href="" th:href="@{/admin/users/update/{id}(id=${user.id})}" class="btn btn-success">Update</a></td>
         </tr>
         </tbody>
     </table>
